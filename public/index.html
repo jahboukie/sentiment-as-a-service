@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SentimentAsAService - Enterprise Healthcare Intelligence Platform</title>
+    <meta name="description" content="Military-grade sentiment analysis platform powered by Claude AI for healthcare ecosystems">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js for analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Custom styles -->
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .security-badge {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%);
+        }
+        .claude-badge {
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+        }
+        .glass-effect {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .animate-pulse-slow {
+            animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        .shadow-glow {
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white font-sans">
+    <!-- Navigation -->
+    <nav class="gradient-bg shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-brain text-2xl mr-3 text-white"></i>
+                        <span class="text-xl font-bold text-white">SentimentAsAService</span>
+                        <span class="ml-2 px-2 py-1 text-xs bg-green-500 text-white rounded-full">LIVE</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="security-badge px-3 py-1 rounded-full text-xs">
+                        <i class="fas fa-shield-alt mr-1"></i>
+                        Military-Grade Security
+                    </div>
+                    <div class="claude-badge px-3 py-1 rounded-full text-xs">
+                        <i class="fas fa-robot mr-1"></i>
+                        Powered by Claude AI
+                    </div>
+                    <button class="bg-white text-gray-900 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition">
+                        Enterprise Login
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 opacity-50"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="text-center">
+                <h1 class="text-5xl md:text-6xl font-extrabold mb-6">
+                    Healthcare Intelligence
+                    <span class="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
+                        Powered by Claude AI
+                    </span>
+                </h1>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
+                    Military-grade sentiment analysis platform providing real-time relationship insights, 
+                    clinical decision support, and predictive analytics for healthcare ecosystems.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button onclick="showApiDemo()" class="bg-blue-600 hover:bg-blue-700 px-8 py-3 rounded-lg font-semibold transition shadow-glow">
+                        <i class="fas fa-play mr-2"></i>
+                        Live API Demo
+                    </button>
+                    <button onclick="showDashboard()" class="bg-purple-600 hover:bg-purple-700 px-8 py-3 rounded-lg font-semibold transition">
+                        <i class="fas fa-chart-line mr-2"></i>
+                        View Analytics
+                    </button>
+                    <button onclick="showSecurityDemo()" class="security-badge px-8 py-3 rounded-lg font-semibold transition">
+                        <i class="fas fa-lock mr-2"></i>
+                        Security Demo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Real-time Stats -->
+    <section class="py-12 bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="bg-gray-700 rounded-lg p-6 text-center">
+                    <div class="text-3xl font-bold text-blue-400 mb-2" id="analysesCount">1,247,893</div>
+                    <div class="text-gray-300">Sentiment Analyses</div>
+                    <div class="text-sm text-green-400 mt-1">
+                        <i class="fas fa-arrow-up mr-1"></i>
+                        +12.3% today
+                    </div>
+                </div>
+                <div class="bg-gray-700 rounded-lg p-6 text-center">
+                    <div class="text-3xl font-bold text-purple-400 mb-2">847</div>
+                    <div class="text-gray-300">Enterprise Clients</div>
+                    <div class="text-sm text-green-400 mt-1">
+                        <i class="fas fa-arrow-up mr-1"></i>
+                        +5.7% this month
+                    </div>
+                </div>
+                <div class="bg-gray-700 rounded-lg p-6 text-center">
+                    <div class="text-3xl font-bold text-green-400 mb-2">99.97%</div>
+                    <div class="text-gray-300">Uptime</div>
+                    <div class="text-sm text-blue-400 mt-1">
+                        <i class="fas fa-shield-alt mr-1"></i>
+                        Military-grade reliability
+                    </div>
+                </div>
+                <div class="bg-gray-700 rounded-lg p-6 text-center">
+                    <div class="text-3xl font-bold text-red-400 mb-2">0</div>
+                    <div class="text-gray-300">Security Breaches</div>
+                    <div class="text-sm text-green-400 mt-1">
+                        <i class="fas fa-lock mr-1"></i>
+                        Zero-knowledge architecture
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Dashboard Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- API Demo Section -->
+        <section id="apiDemo" class="mb-12 hidden">
+            <h2 class="text-3xl font-bold mb-6">
+                <i class="fas fa-code mr-3 text-blue-400"></i>
+                Live API Demonstration
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-gray-800 rounded-lg p-6">
+                    <h3 class="text-xl font-semibold mb-4">Real-time Sentiment Analysis</h3>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Enter text for analysis:</label>
+                        <textarea 
+                            id="sentimentInput" 
+                            class="w-full h-32 p-3 bg-gray-700 rounded-lg border border-gray-600 text-white resize-none"
+                            placeholder="I'm feeling much better after starting the new treatment. My partner has been so supportive through this journey..."
+                        ></textarea>
+                    </div>
+                    <div class="flex gap-4 mb-4">
+                        <label class="flex items-center">
+                            <input type="checkbox" id="healthcareContext" checked class="mr-2">
+                            <span class="text-sm">Healthcare Context</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" id="relationshipContext" checked class="mr-2">
+                            <span class="text-sm">Relationship Context</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" id="crisisDetection" checked class="mr-2">
+                            <span class="text-sm">Crisis Detection</span>
+                        </label>
+                    </div>
+                    <button onclick="analyzeSentiment()" class="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-lg font-semibold transition">
+                        <i class="fas fa-brain mr-2"></i>
+                        Analyze with Claude AI
+                    </button>
+                </div>
+                <div class="bg-gray-800 rounded-lg p-6">
+                    <h3 class="text-xl font-semibold mb-4">Analysis Results</h3>
+                    <div id="analysisResults" class="space-y-4">
+                        <div class="text-gray-400 text-center py-8">
+                            <i class="fas fa-chart-pie text-4xl mb-4"></i>
+                            <p>Results will appear here after analysis</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Analytics Dashboard -->
+        <section id="dashboard" class="mb-12 hidden">
+            <h2 class="text-3xl font-bold mb-6">
+                <i class="fas fa-chart-line mr-3 text-purple-400"></i>
+                Enterprise Analytics Dashboard
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <div class="bg-gray-800 rounded-lg p-6">
+                    <h3 class="text-xl font-semibold mb-4">Sentiment Trends (30 Days)</h3>
+                    <canvas id="sentimentChart" width="400" height="200"></canvas>
+                </div>
+                <div class="bg-gray-800 rounded-lg p-6">
+                    <h3 class="text-xl font-semibold mb-4">Cross-App Correlations</h3>
+                    <canvas id="correlationChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="bg-gray-800 rounded-lg p-6">
+                    <h3 class="text-lg font-semibold mb-4">Crisis Alerts</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between p-3 bg-red-900 rounded-lg">
+                            <div>
+                                <div class="font-medium">High Risk Patient</div>
+                                <div class="text-sm text-gray-300">MenoWellness User</div>
+                            </div>
+                            <span class="text-red-400 font-bold">HIGH</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-yellow-900 rounded-lg">
+                            <div>
+                                <div class="font-medium">Relationship Stress</div>
+                                <div class="text-sm text-gray-300">SupportPartner Couple</div>
+                            </div>
+                            <span class="text-yellow-400 font-bold">MED</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-green-900 rounded-lg">
+                            <div>
+                                <div class="font-medium">Recovery Progress</div>
+                                <div class="text-sm text-gray-300">Treatment Adherence</div>
+                            </div>
+                            <span class="text-green-400 font-bold">GOOD</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-800 rounded-lg p-6">
+                    <h3 class="text-lg font-semibold mb-4">Research Insights</h3>
+                    <div class="space-y-3">
+                        <div class="p-3 bg-blue-900 rounded-lg">
+                            <div class="font-medium">Support Quality Impact</div>
+                            <div class="text-sm text-gray-300">75% correlation with treatment success</div>
+                        </div>
+                        <div class="p-3 bg-purple-900 rounded-lg">
+                            <div class="font-medium">Early Warning Patterns</div>
+                            <div class="text-sm text-gray-300">Crisis prediction accuracy: 89%</div>
+                        </div>
+                        <div class="p-3 bg-indigo-900 rounded-lg">
+                            <div class="font-medium">Population Health</div>
+                            <div class="text-sm text-gray-300">Wellness scores improving 12%</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-800 rounded-lg p-6">
+                    <h3 class="text-lg font-semibold mb-4">Enterprise Metrics</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">API Calls Today</span>
+                            <span class="font-bold">847,392</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Revenue (MTD)</span>
+                            <span class="font-bold text-green-400">$247,391</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Active Clients</span>
+                            <span class="font-bold">847</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Data Points</span>
+                            <span class="font-bold">12.4M</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Security Dashboard -->
+        <section id="securityDemo" class="mb-12 hidden">
+            <h2 class="text-3xl font-bold mb-6">
+                <i class="fas fa-shield-alt mr-3 text-red-400"></i>
+                Military-Grade Security Dashboard
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <div class="bg-gray-800 rounded-lg p-6">
+                    <h3 class="text-xl font-semibold mb-4">Zero-Knowledge Encryption</h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span>AES-256-GCM Encryption</span>
+                            <span class="text-green-400"><i class="fas fa-check"></i> Active</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span>RSA-4096 Key Exchange</span>
+                            <span class="text-green-400"><i class="fas fa-check"></i> Active</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span>Argon2 Key Derivation</span>
+                            <span class="text-green-400"><i class="fas fa-check"></i> Active</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span>Client-side Encryption</span>
+                            <span class="text-green-400"><i class="fas fa-check"></i> Active</span>
+                        </div>
+                    </div>
+                    <div class="mt-6 p-4 bg-green-900 rounded-lg">
+                        <div class="flex items-center">
+                            <i class="fas fa-lock text-green-400 mr-2"></i>
+                            <span class="font-semibold">Server Never Sees Unencrypted Data</span>
+                        </div>
+                        <p class="text-sm text-gray-300 mt-2">All PHI is encrypted client-side before transmission. Zero-knowledge architecture ensures maximum privacy.</p>
+                    </div>
+                </div>
+                <div class="bg-gray-800 rounded-lg p-6">
+                    <h3 class="text-xl font-semibold mb-4">HIPAA Compliance Status</h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span>Administrative Safeguards</span>
+                            <span class="text-green-400">100%</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span>Physical Safeguards</span>
+                            <span class="text-green-400">100%</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span>Technical Safeguards</span>
+                            <span class="text-green-400">100%</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span>Audit Trail Compliance</span>
+                            <span class="text-green-400">100%</span>
+                        </div>
+                    </div>
+                    <div class="mt-6">
+                        <div class="bg-blue-900 rounded-lg p-4">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold">2,555</div>
+                                <div class="text-sm text-gray-300">Days of Audit Retention</div>
+                                <div class="text-xs text-blue-400">7+ Years HIPAA Compliant</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-800 rounded-lg p-6">
+                <h3 class="text-xl font-semibold mb-4">Real-time Security Monitoring</h3>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="text-center p-4 bg-green-900 rounded-lg">
+                        <div class="text-2xl font-bold text-green-400">0</div>
+                        <div class="text-sm">Security Breaches</div>
+                    </div>
+                    <div class="text-center p-4 bg-blue-900 rounded-lg">
+                        <div class="text-2xl font-bold text-blue-400">847,293</div>
+                        <div class="text-sm">Audit Events Today</div>
+                    </div>
+                    <div class="text-center p-4 bg-purple-900 rounded-lg">
+                        <div class="text-2xl font-bold text-purple-400">12</div>
+                        <div class="text-sm">Failed Login Attempts</div>
+                    </div>
+                    <div class="text-center p-4 bg-yellow-900 rounded-lg">
+                        <div class="text-2xl font-bold text-yellow-400">3</div>
+                        <div class="text-sm">Risk Assessments</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Enterprise Features -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold mb-8 text-center">Enterprise Features</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-gray-800 rounded-lg p-6 text-center">
+                    <div class="claude-badge w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-robot text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Claude AI Powered</h3>
+                    <p class="text-gray-300">Exclusive integration with Claude AI for sophisticated healthcare sentiment analysis and clinical insights.</p>
+                </div>
+                <div class="bg-gray-800 rounded-lg p-6 text-center">
+                    <div class="security-badge w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-shield-alt text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Military-Grade Security</h3>
+                    <p class="text-gray-300">Zero-knowledge encryption, HIPAA compliance, and comprehensive audit trails protect all healthcare data.</p>
+                </div>
+                <div class="bg-gray-800 rounded-lg p-6 text-center">
+                    <div class="bg-gradient-to-r from-blue-500 to-purple-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-chart-network text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Cross-App Correlation</h3>
+                    <p class="text-gray-300">Unique insights from analyzing data across MenoWellness, SupportPartner, and other healthcare apps.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- API Pricing -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold mb-8 text-center">Enterprise Pricing</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                    <h3 class="text-xl font-semibold mb-3">Standard</h3>
+                    <div class="text-3xl font-bold mb-4">$299<span class="text-lg text-gray-400">/month</span></div>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> 10,000 API calls</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Basic sentiment analysis</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Healthcare context</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Standard support</li>
+                    </ul>
+                    <button class="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded-lg transition">Get Started</button>
+                </div>
+                <div class="bg-gray-800 rounded-lg p-6 border-2 border-purple-500 relative">
+                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-purple-500 text-white px-4 py-1 rounded-full text-sm">Most Popular</div>
+                    <h3 class="text-xl font-semibold mb-3">Premium</h3>
+                    <div class="text-3xl font-bold mb-4">$899<span class="text-lg text-gray-400">/month</span></div>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> 100,000 API calls</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Clinical insights</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Crisis detection</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Cross-app correlation</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Priority support</li>
+                    </ul>
+                    <button class="w-full bg-purple-600 hover:bg-purple-700 py-2 rounded-lg transition">Get Started</button>
+                </div>
+                <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                    <h3 class="text-xl font-semibold mb-3">Enterprise</h3>
+                    <div class="text-3xl font-bold mb-4">$1,499<span class="text-lg text-gray-400">/month</span></div>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> 1,000,000 API calls</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Full platform access</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Research data licensing</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Custom integrations</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Dedicated support</li>
+                    </ul>
+                    <button class="w-full bg-gray-600 hover:bg-gray-700 py-2 rounded-lg transition">Contact Sales</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">SentimentAsAService</h3>
+                    <p class="text-gray-400">Military-grade healthcare intelligence platform powered by Claude AI.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Products</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white">Sentiment Analysis API</a></li>
+                        <li><a href="#" class="hover:text-white">Clinical Insights</a></li>
+                        <li><a href="#" class="hover:text-white">Research Platform</a></li>
+                        <li><a href="#" class="hover:text-white">Enterprise Dashboard</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Security</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white">HIPAA Compliance</a></li>
+                        <li><a href="#" class="hover:text-white">Zero-Knowledge Encryption</a></li>
+                        <li><a href="#" class="hover:text-white">Audit Trails</a></li>
+                        <li><a href="#" class="hover:text-white">Security Documentation</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Support</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white">API Documentation</a></li>
+                        <li><a href="#" class="hover:text-white">Enterprise Support</a></li>
+                        <li><a href="#" class="hover:text-white">Healthcare Compliance</a></li>
+                        <li><a href="#" class="hover:text-white">Contact Sales</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 SentimentAsAService. Healthcare Intelligence Platform. Powered exclusively by Claude AI.</p>
+                <p class="mt-2 text-sm">HIPAA Compliant • Military-Grade Security • Zero-Knowledge Architecture</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

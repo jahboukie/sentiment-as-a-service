@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Explorer - SentimentAsAService</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .code-block {
+            background: #1a1a1a;
+            border: 1px solid #333;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+    <!-- Navigation -->
+    <nav class="gradient-bg shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <i class="fas fa-brain text-2xl mr-3 text-white"></i>
+                        <span class="text-xl font-bold text-white">SentimentAsAService</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span class="text-white">API Explorer</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="mb-8">
+            <h1 class="text-4xl font-bold mb-4">API Documentation & Explorer</h1>
+            <p class="text-gray-300">Interactive documentation for the SentimentAsAService API powered by Claude AI</p>
+        </div>
+
+        <!-- API Endpoints -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Sidebar with endpoints -->
+            <div class="lg:col-span-1">
+                <div class="bg-gray-800 rounded-lg p-6 sticky top-8">
+                    <h2 class="text-xl font-semibold mb-4">API Endpoints</h2>
+                    
+                    <div class="space-y-2">
+                        <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wide">Public Endpoints</h3>
+                        <button onclick="showEndpoint('sentiment-analyze')" class="w-full text-left p-2 rounded hover:bg-gray-700 text-sm">
+                            <span class="bg-green-600 text-xs px-2 py-1 rounded mr-2">POST</span>
+                            /api/sentiment/analyze
+                        </button>
+                        <button onclick="showEndpoint('sentiment-healthcare')" class="w-full text-left p-2 rounded hover:bg-gray-700 text-sm">
+                            <span class="bg-green-600 text-xs px-2 py-1 rounded mr-2">POST</span>
+                            /api/sentiment/analyze/healthcare
+                        </button>
+                        
+                        <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wide mt-6">Enterprise Endpoints</h3>
+                        <button onclick="showEndpoint('data-ingest')" class="w-full text-left p-2 rounded hover:bg-gray-700 text-sm">
+                            <span class="bg-green-600 text-xs px-2 py-1 rounded mr-2">POST</span>
+                            /api/data/ingest
+                        </button>
+                        <button onclick="showEndpoint('enterprise-analytics')" class="w-full text-left p-2 rounded hover:bg-gray-700 text-sm">
+                            <span class="bg-green-600 text-xs px-2 py-1 rounded mr-2">POST</span>
+                            /api/enterprise/analytics/correlations
+                        </button>
+                        <button onclick="showEndpoint('clinical-insights')" class="w-full text-left p-2 rounded hover:bg-gray-700 text-sm">
+                            <span class="bg-green-600 text-xs px-2 py-1 rounded mr-2">POST</span>
+                            /api/clinical/insights/generate
+                        </button>
+                        
+                        <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wide mt-6">Research Endpoints</h3>
+                        <button onclick="showEndpoint('research-datasets')" class="w-full text-left p-2 rounded hover:bg-gray-700 text-sm">
+                            <span class="bg-blue-600 text-xs px-2 py-1 rounded mr-2">GET</span>
+                            /api/research/datasets
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main content -->
+            <div class="lg:col-span-2">
+                <!-- Sentiment Analyze Endpoint -->
+                <div id="sentiment-analyze" class="endpoint-content bg-gray-800 rounded-lg p-6">
+                    <h2 class="text-2xl font-bold mb-4">
+                        <span class="bg-green-600 text-sm px-3 py-1 rounded mr-3">POST</span>
+                        /api/sentiment/analyze
+                    </h2>
+                    <p class="text-gray-300 mb-6">Analyze sentiment of text using Claude AI with healthcare and relationship context.</p>
+                    
+                    <h3 class="text-lg font-semibold mb-3">Request Body</h3>
+                    <div class="code-block rounded-lg p-4 mb-6">
+                        <pre class="text-green-400"><code>{
+  "text": "I'm feeling much better after starting the new treatment",
+  "includeEmotions": true,
+  "includeKeyTerms": true,
+  "healthcareContext": true,
+  "relationshipContext": true
+}</code></pre>
+                    </div>
+
+                    <h3 class="text-lg font-semibold mb-3">Response</h3>
+                    <div class="code-block rounded-lg p-4 mb-6">
+                        <pre class="text-blue-400"><code>{
+  "sentiment": {
+    "score": 0.75,
+    "category": "positive",
+    "confidence": 0.89
+  },
+  "emotions": {
+    "primary": "hope",
+    "secondary": ["relief", "gratitude"],
+    "emotional_intensity": 0.72
+  },
+  "healthcareContext": {
+    "indicators": [
+      {
+        "term": "treatment",
+        "sentiment_impact": 0.4,
+        "context": "Medical treatment mentioned positively"
+      }
+    ],
+    "health_status_trend": "improving",
+    "treatment_sentiment": "positive"
+  },
+  "crisisAssessment": {
+    "risk_level": "none",
+    "indicators": [],
+    "recommended_action": "none"
+  },
+  "insights": {
+    "overall_assessment": "Positive treatment response with good emotional state",
+    "recommendations": ["Continue current treatment plan"]
+  },
+  "processingTime": 847,
+  "provider": "claude-ai"
+}</code></pre>
+                    </div>
+
+                    <div class="bg-gray-700 rounded-lg p-4">
+                        <h4 class="font-semibold mb-2">Try it out:</h4>
+                        <textarea id="sentiment-test-input" class="w-full h-24 p-3 bg-gray-600 rounded border border-gray-500 text-white resize-none mb-3" placeholder="Enter text to analyze..."></textarea>
+                        <button onclick="testSentimentAPI()" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded font-semibold">
+                            <i class="fas fa-play mr-2"></i>Test API
+                        </button>
+                        <div id="sentiment-test-result" class="mt-4"></div>
+                    </div>
+                </div>
+
+                <!-- Data Ingest Endpoint -->
+                <div id="data-ingest" class="endpoint-content bg-gray-800 rounded-lg p-6 hidden">
+                    <h2 class="text-2xl font-bold mb-4">
+                        <span class="bg-green-600 text-sm px-3 py-1 rounded mr-3">POST</span>
+                        /api/data/ingest
+                    </h2>
+                    <div class="bg-yellow-900 border border-yellow-600 rounded-lg p-4 mb-6">
+                        <p class="text-yellow-200">
+                            <i class="fas fa-key mr-2"></i>
+                            <strong>Authentication Required:</strong> This endpoint requires an enterprise API key.
+                        </p>
+                    </div>
+                    
+                    <p class="text-gray-300 mb-6">Ingest data from healthcare applications for sentiment analysis and correlation studies.</p>
+                    
+                    <h3 class="text-lg font-semibold mb-3">Headers</h3>
+                    <div class="code-block rounded-lg p-4 mb-6">
+                        <pre class="text-yellow-400"><code>x-api-key: saas_your_enterprise_api_key
+Content-Type: application/json</code></pre>
+                    </div>
+
+                    <h3 class="text-lg font-semibold mb-3">Request Body</h3>
+                    <div class="code-block rounded-lg p-4 mb-6">
+                        <pre class="text-green-400"><code>{
+  "appName": "MenoWellness",
+  "userId": "uuid-of-user",
+  "textContent": "User journal entry or interaction data",
+  "contextMetadata": {
+    "sessionType": "symptom_tracking",
+    "timestamp": "2024-06-11T10:30:00Z"
+  },
+  "anonymize": true
+}</code></pre>
+                    </div>
+
+                    <h3 class="text-lg font-semibold mb-3">Response</h3>
+                    <div class="code-block rounded-lg p-4 mb-6">
+                        <pre class="text-blue-400"><code>{
+  "success": true,
+  "dataId": "data-uuid",
+  "sentimentAnalysis": {
+    "score": 0.65,
+    "category": "positive",
+    "confidence": 0.82
+  },
+  "anonymizedData": {
+    "anonymousId": "anon-12345",
+    "processed": true
+  },
+  "processingTime": 245,
+  "provider": "claude-ai"
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Clinical Insights Endpoint -->
+                <div id="clinical-insights" class="endpoint-content bg-gray-800 rounded-lg p-6 hidden">
+                    <h2 class="text-2xl font-bold mb-4">
+                        <span class="bg-green-600 text-sm px-3 py-1 rounded mr-3">POST</span>
+                        /api/clinical/insights/generate
+                    </h2>
+                    <div class="bg-red-900 border border-red-600 rounded-lg p-4 mb-6">
+                        <p class="text-red-200">
+                            <i class="fas fa-user-md mr-2"></i>
+                            <strong>Healthcare Provider Only:</strong> Requires clinical authorization and patient access rights.
+                        </p>
+                    </div>
+                    
+                    <p class="text-gray-300 mb-6">Generate comprehensive clinical insights for healthcare providers using Claude AI analysis.</p>
+                    
+                    <h3 class="text-lg font-semibold mb-3">Request Body</h3>
+                    <div class="code-block rounded-lg p-4 mb-6">
+                        <pre class="text-green-400"><code>{
+  "patientId": "patient-uuid",
+  "timeframe": "30d",
+  "includeRiskAssessment": true,
+  "includeTreatmentRecommendations": true,
+  "includePredictiveInsights": false
+}</code></pre>
+                    </div>
+
+                    <h3 class="text-lg font-semibold mb-3">Response</h3>
+                    <div class="code-block rounded-lg p-4 mb-6">
+                        <pre class="text-blue-400"><code>{
+  "success": true,
+  "insights": {
+    "patient_id": "patient-uuid",
+    "comprehensive_insights": {
+      "executive_summary": "Patient showing positive treatment response...",
+      "primary_concerns": [
+        {
+          "concern": "Mild anxiety related to treatment",
+          "severity": "low",
+          "evidence": ["anxiety indicators in recent entries"],
+          "recommended_action": "monitor and provide reassurance"
+        }
+      ],
+      "positive_indicators": [
+        {
+          "indicator": "Improved treatment adherence",
+          "strength": "high",
+          "clinical_significance": "Strong predictor of positive outcomes"
+        }
+      ]
+    },
+    "risk_assessment": {
+      "overall_risk_level": "low",
+      "crisis_risk": {
+        "suicide_risk": "none",
+        "self_harm_risk": "none"
+      }
+    },
+    "relationship_health": {
+      "relationship_health_score": 75,
+      "support_level": "high"
+    }
+  },
+  "provider": "claude-ai"
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Add other endpoints as hidden divs -->
+                <div id="sentiment-healthcare" class="endpoint-content bg-gray-800 rounded-lg p-6 hidden">
+                    <h2 class="text-2xl font-bold mb-4">
+                        <span class="bg-green-600 text-sm px-3 py-1 rounded mr-3">POST</span>
+                        /api/sentiment/analyze/healthcare
+                    </h2>
+                    <p class="text-gray-300 mb-6">Specialized healthcare sentiment analysis with medical terminology understanding.</p>
+                    <!-- Add content similar to above -->
+                </div>
+
+                <div id="enterprise-analytics" class="endpoint-content bg-gray-800 rounded-lg p-6 hidden">
+                    <h2 class="text-2xl font-bold mb-4">
+                        <span class="bg-green-600 text-sm px-3 py-1 rounded mr-3">POST</span>
+                        /api/enterprise/analytics/correlations
+                    </h2>
+                    <p class="text-gray-300 mb-6">Advanced correlation analysis across multiple healthcare applications.</p>
+                    <!-- Add content -->
+                </div>
+
+                <div id="research-datasets" class="endpoint-content bg-gray-800 rounded-lg p-6 hidden">
+                    <h2 class="text-2xl font-bold mb-4">
+                        <span class="bg-blue-600 text-sm px-3 py-1 rounded mr-3">GET</span>
+                        /api/research/datasets
+                    </h2>
+                    <p class="text-gray-300 mb-6">Browse available anonymized research datasets for pharmaceutical partnerships.</p>
+                    <!-- Add content -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showEndpoint(endpointId) {
+            // Hide all endpoint content
+            const contents = document.querySelectorAll('.endpoint-content');
+            contents.forEach(content => content.classList.add('hidden'));
+            
+            // Show selected endpoint
+            document.getElementById(endpointId).classList.remove('hidden');
+        }
+
+        function testSentimentAPI() {
+            const input = document.getElementById('sentiment-test-input').value.trim();
+            const resultDiv = document.getElementById('sentiment-test-result');
+            
+            if (!input) {
+                resultDiv.innerHTML = '<div class="text-red-400">Please enter some text to analyze</div>';
+                return;
+            }
+
+            resultDiv.innerHTML = '<div class="text-yellow-400"><i class="fas fa-spinner fa-spin mr-2"></i>Analyzing with Claude AI...</div>';
+
+            // Simulate API call
+            setTimeout(() => {
+                const mockResult = {
+                    sentiment: {
+                        score: Math.random() * 2 - 1,
+                        category: Math.random() > 0.5 ? 'positive' : 'negative',
+                        confidence: Math.random() * 0.3 + 0.7
+                    },
+                    processingTime: Math.random() * 500 + 200,
+                    provider: 'claude-ai'
+                };
+
+                resultDiv.innerHTML = `
+                    <div class="bg-gray-700 rounded-lg p-4">
+                        <h5 class="font-semibold mb-2">API Response:</h5>
+                        <pre class="text-green-400 text-sm overflow-x-auto">${JSON.stringify(mockResult, null, 2)}</pre>
+                    </div>
+                `;
+            }, 2000);
+        }
+
+        // Show first endpoint by default
+        showEndpoint('sentiment-analyze');
+    </script>
+</body>
+</html>

@@ -34,6 +34,9 @@ app.use(limiter);
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
+// Serve static files for enterprise dashboard
+app.use(express.static('public'));
+
 // Request logging
 app.use((req, res, next) => {
   logger.info(`${req.method} ${req.path}`, {
