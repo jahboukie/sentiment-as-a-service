@@ -40,10 +40,10 @@ SentimentAsAService is the central intelligence platform for the ecosystem-intel
 ## 📊 Business Value
 
 ### Revenue Streams
-1. **Enterprise API Access**: $299-$1,499/month
-2. **Research Dataset Licensing**: $0.10/record + custom contracts
-3. **ML Model Training**: $0.20/data point
-4. **Consulting Services**: $300/hour
+1. **Enterprise API Access**: $2,990-$24,990/month  
+2. **Research Dataset Licensing**: $1.50/record + custom contracts
+3. **Clinical ML Model Training**: $2.50/data point
+4. **Healthcare Consulting**: $750/hour
 
 ### Unique Market Position
 - **Cross-app correlation data** impossible to obtain elsewhere
@@ -199,11 +199,11 @@ Headers: { "Authorization": "Bearer researcher_token" }
 
 ### API Tiers
 
-| Tier | Monthly Quota | Rate Limit | Cost/Data Point | Features |
-|------|---------------|------------|----------------|----------|
-| **Standard** | 10,000 | 100/min | $0.05 | Basic sentiment analysis |
-| **Premium** | 100,000 | 500/min | $0.01 | ML training, correlations |
-| **Enterprise** | 1,000,000 | 2,000/min | $0.005 | Full platform, federated learning |
+| Tier | Monthly Quota | Rate Limit | Monthly Cost | Features |
+|------|---------------|------------|-------------|----------|
+| **Professional** | 50,000 | 500/min | $2,990 | Advanced sentiment + crisis detection |
+| **Enterprise** | 500,000 | 2,000/min | $8,990 | Clinical insights + correlation analytics |
+| **Research Partner** | Unlimited | 5,000/min | $24,990 | Full platform + pharmaceutical licensing |
 
 ### Usage Tracking
 - Real-time usage monitoring
