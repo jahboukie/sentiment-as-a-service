@@ -9,6 +9,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const axios = require('axios');
 
 const app = express();
 const PORT = process.env.PORT || 3005;
@@ -29,11 +30,24 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Demo sentiment analysis endpoint
-app.post('/api/sentiment/analyze', (req, res) => {
+// Demo sentiment analysis endpoint (with real Claude AI if API key available)
+app.post('/api/sentiment/analyze', async (req, res) => {
   const { text } = req.body;
-  
-  // Simple mock analysis for demo
+
+  // Check if we have Claude AI API key for real analysis
+  const claudeApiKey = process.env.ANTHROPIC_API_KEY;
+
+  if (claudeApiKey && text) {
+    try {
+      // Use real Claude AI analysis
+      const claudeResult = await analyzeWithClaudeAI(text, claudeApiKey);
+      return res.json(claudeResult);
+    } catch (error) {
+      console.log('Claude AI failed, falling back to mock:', error.message);
+    }
+  }
+
+  // Fallback to mock analysis for demo
   const mockResult = {
     sentiment: {
       score: Math.random() * 2 - 1,
@@ -95,7 +109,9 @@ app.get('/api-explorer', (req, res) => {
 
 // Start server
 app.listen(PORT, () => {
-  console.log('🚀 SentimentAsAService Demo Server Started!');
+  const hasClaudeAPI = !!process.env.ANTHROPIC_API_KEY;
+
+  console.log('🚀 SentimentAsAService Server Started!');
   console.log(`📊 Dashboard: http://localhost:${PORT}`);
   console.log(`🔧 API Explorer: http://localhost:${PORT}/api-explorer`);
   console.log(`💡 Health Check: http://localhost:${PORT}/health`);
@@ -103,12 +119,126 @@ app.listen(PORT, () => {
   console.log('🎯 Features Available:');
   console.log('   • Enterprise Dashboard with Live Demo');
   console.log('   • Interactive API Explorer');
-  console.log('   • Mock Claude AI Sentiment Analysis');
+  console.log(`   • ${hasClaudeAPI ? '🤖 LIVE Claude AI' : '🎭 Mock Claude AI'} Sentiment Analysis`);
   console.log('   • Security & Compliance Dashboard');
   console.log('   • Real-time Analytics Charts');
   console.log('');
-  console.log('🔒 Note: Running in DEMO mode - mock data only');
-  console.log('   Add ANTHROPIC_API_KEY to .env for live Claude AI');
+
+  if (hasClaudeAPI) {
+    console.log('🤖 LIVE MODE: Real Claude AI analysis enabled!');
+    console.log('   ✅ ANTHROPIC_API_KEY detected');
+    console.log('   ✅ Production-ready for VC demos');
+    console.log('   ✅ Real healthcare sentiment analysis');
+  } else {
+    console.log('🎭 DEMO MODE: Mock data only');
+    console.log('   Add ANTHROPIC_API_KEY to .env for live Claude AI');
+  }
 });
+
+// Real Claude AI analysis function
+async function analyzeWithClaudeAI(text, apiKey) {
+  const startTime = Date.now();
+
+  const prompt = `You are an expert sentiment analysis AI specializing in healthcare and relationship contexts. Analyze the following text and provide a comprehensive sentiment analysis.
+
+TEXT TO ANALYZE:
+"${text}"
+
+ANALYSIS REQUIREMENTS:
+- Focus on healthcare-specific sentiment indicators (symptoms, treatments, recovery, pain, etc.)
+- Analyze relationship dynamics (support, communication, conflict, connection, etc.)
+- Assess crisis risk level (emergency mental health situations, suicidal ideation, etc.)
+- Identify primary emotions present in the text
+- Extract key terms and phrases that drive the sentiment
+
+Return your analysis in this exact JSON format:
+{
+  "sentiment_score": <number between -1 and 1>,
+  "sentiment_category": "<positive|negative|neutral|mixed>",
+  "confidence": <number between 0 and 1>,
+  "emotions": {
+    "primary": "<primary emotion>",
+    "secondary": ["<emotion1>", "<emotion2>"],
+    "emotional_intensity": <number between 0 and 1>
+  },
+  "healthcare_context": {
+    "indicators": [
+      {
+        "term": "<healthcare term>",
+        "sentiment_impact": <number between -1 and 1>,
+        "context": "<explanation>"
+      }
+    ],
+    "health_status_trend": "<improving|stable|declining>",
+    "treatment_sentiment": "<positive|negative|neutral>"
+  },
+  "relationship_context": {
+    "indicators": [
+      {
+        "term": "<relationship term>",
+        "sentiment_impact": <number between -1 and 1>,
+        "context": "<explanation>"
+      }
+    ],
+    "relationship_health": "<healthy|strained|supportive>",
+    "support_level": "<high|medium|low>",
+    "communication_quality": "<good|fair|poor>"
+  },
+  "crisis_assessment": {
+    "risk_level": "<none|low|medium|high|critical>",
+    "indicators": ["<risk indicators if any>"],
+    "recommended_action": "<none|monitoring|professional_support|emergency>"
+  },
+  "insights": {
+    "overall_assessment": "<brief clinical assessment>",
+    "recommendations": ["<actionable recommendations>"]
+  },
+  "key_terms": ["<important terms from the text>"]
+}`;
+
+  try {
+    const response = await axios.post('https://api.anthropic.com/v1/messages', {
+      model: 'claude-3-5-sonnet-20241022',
+      max_tokens: 1500,
+      messages: [
+        {
+          role: 'user',
+          content: prompt
+        }
+      ]
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01'
+      }
+    });
+
+    const analysis = JSON.parse(response.data.content[0].text);
+
+    return {
+      success: true,
+      result: {
+        sentiment: {
+          score: analysis.sentiment_score,
+          category: analysis.sentiment_category,
+          confidence: analysis.confidence
+        },
+        emotions: analysis.emotions,
+        healthcareContext: analysis.healthcare_context,
+        relationshipContext: analysis.relationship_context,
+        crisisAssessment: analysis.crisis_assessment,
+        insights: analysis.insights,
+        keyTerms: analysis.key_terms,
+        processingTime: Date.now() - startTime,
+        provider: 'claude-ai-live'
+      }
+    };
+
+  } catch (error) {
+    console.error('Claude AI API error:', error.response?.data || error.message);
+    throw error;
+  }
+}
 
 module.exports = app;

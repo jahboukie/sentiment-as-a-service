@@ -8,7 +8,10 @@
     "demo": "node start-demo.js",
     "dev": "nodemon server.js",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "build": "echo 'Build complete'",
+    "vercel-build": "echo 'Vercel build complete'",
+    "deploy": "node deploy-to-vercel.js"
   },
   "dependencies": {
     "express": "^4.18.2",

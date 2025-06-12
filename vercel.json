@@ -1,0 +1,24 @@
+{
+  "version": 2,
+  "name": "sentimentasaservice",
+  "builds": [
+    {
+      "src": "start-demo.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/start-demo.js"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "functions": {
+    "start-demo.js": {
+      "maxDuration": 30
+    }
+  }
+}
