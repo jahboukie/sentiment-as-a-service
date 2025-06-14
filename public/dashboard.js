@@ -188,21 +188,34 @@ async function analyzeSentiment() {
     button.disabled = true;
 
     try {
-        // Simulate API call to Claude AI
-        await simulateApiCall();
-        
-        // Get analysis options
-        const healthcareContext = document.getElementById('healthcareContext').checked;
-        const relationshipContext = document.getElementById('relationshipContext').checked;
-        const crisisDetection = document.getElementById('crisisDetection').checked;
-
-        // Generate mock analysis results
-        const results = generateMockAnalysis(input, {
-            healthcareContext,
-            relationshipContext,
-            crisisDetection
+        // Call real Claude AI API
+        const response = await fetch('/api/sentiment/analyze', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                text: input,
+                includeEmotions: true,
+                includeKeyTerms: true,
+                healthcareContext: document.getElementById('healthcareContext').checked,
+                relationshipContext: document.getElementById('relationshipContext').checked,
+                crisisDetection: document.getElementById('crisisDetection').checked
+            })
         });
 
+        if (!response.ok) {
+            throw new Error(`API call failed: ${response.status}`);
+        }
+
+        const apiResult = await response.json();
+
+        if (!apiResult.success) {
+            throw new Error('API returned error');
+        }
+
+        // Convert API result to display format
+        const results = convertApiResultToDisplayFormat(apiResult.result);
         displayAnalysisResults(results);
 
     } catch (error) {
@@ -220,9 +233,39 @@ async function analyzeSentiment() {
     }
 }
 
-// Simulate API call delay
-function simulateApiCall() {
-    return new Promise(resolve => setTimeout(resolve, 2000));
+// Convert API result to display format
+function convertApiResultToDisplayFormat(apiResult) {
+    return {
+        sentiment: {
+            score: apiResult.sentiment.score,
+            category: apiResult.sentiment.category,
+            confidence: apiResult.sentiment.confidence
+        },
+        emotions: apiResult.emotions && typeof apiResult.emotions === 'object' ?
+            Object.fromEntries(
+                Object.entries(apiResult.emotions).filter(([key, value]) =>
+                    typeof value === 'number' && !isNaN(value)
+                )
+            ) : {},
+        healthcareContext: apiResult.healthcareContext ? {
+            health_status_trend: apiResult.healthcareContext.health_status_trend,
+            treatment_sentiment: apiResult.healthcareContext.treatment_sentiment,
+            indicators: apiResult.healthcareContext.indicators || []
+        } : null,
+        relationshipContext: apiResult.relationshipContext ? {
+            relationship_health: apiResult.relationshipContext.relationship_health,
+            support_level: apiResult.relationshipContext.support_level,
+            communication_quality: apiResult.relationshipContext.communication_quality,
+            indicators: apiResult.relationshipContext.indicators || []
+        } : null,
+        crisisAssessment: apiResult.crisisAssessment ? {
+            risk_level: apiResult.crisisAssessment.risk_level,
+            recommended_action: apiResult.crisisAssessment.recommended_action,
+            indicators: apiResult.crisisAssessment.indicators || []
+        } : null,
+        processingTime: apiResult.processingTime || 0,
+        provider: apiResult.provider || 'claude-ai'
+    };
 }
 
 // Generate mock analysis results
