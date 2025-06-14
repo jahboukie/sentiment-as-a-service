@@ -113,6 +113,24 @@ app.get('/api-explorer', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'api-explorer.html'));
 });
 
+// Serve pitch deck
+app.get('/pitch', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'pitch.html'));
+});
+
+// Alternative routes for pitch deck
+app.get('/deck', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'pitch.html'));
+});
+
+app.get('/investor', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'pitch.html'));
+});
+
+app.get('/presentation', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'pitch.html'));
+});
+
 // Start server
 app.listen(PORT, () => {
   const hasClaudeAPI = !!process.env.ANTHROPIC_API_KEY;

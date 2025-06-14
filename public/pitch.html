@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SentimentAsAService - Investor Pitch Deck</title>
+    <meta name="description" content="Revolutionary healthcare intelligence platform - $4T market opportunity">
+    
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .slide-content {
+            max-width: 1200px;
+            width: 100%;
+            padding: 2rem;
+        }
+        .number-highlight {
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .glow {
+            box-shadow: 0 0 30px rgba(78, 205, 196, 0.3);
+        }
+        .slide-nav {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+        }
+        .slide-counter {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white overflow-x-hidden">
+    
+    <!-- Slide Navigation -->
+    <div class="slide-nav">
+        <button onclick="previousSlide()" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-l-lg">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button onclick="nextSlide()" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-r-lg">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+    
+    <!-- Slide Counter -->
+    <div class="slide-counter bg-gray-800 px-4 py-2 rounded-lg">
+        <span id="currentSlide">1</span> / <span id="totalSlides">10</span>
+    </div>
+
+    <!-- Slide 1: Title -->
+    <div class="slide gradient-bg" id="slide-1">
+        <div class="slide-content text-center">
+            <div class="mb-8">
+                <i class="fas fa-brain text-6xl text-white mb-4"></i>
+                <h1 class="text-6xl font-bold mb-4">SentimentAsAService</h1>
+                <p class="text-2xl mb-8">Revolutionary Healthcare Intelligence Platform</p>
+                <div class="bg-white bg-opacity-20 rounded-lg p-6 inline-block">
+                    <p class="text-xl">Powered by Claude AI • HIPAA Compliant • Enterprise Ready</p>
+                </div>
+            </div>
+            <div class="mt-12">
+                <p class="text-lg opacity-80">Transforming the $4 Trillion Healthcare Market</p>
+                <p class="text-sm opacity-60 mt-2">Series A Funding Round • $5M Target</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 2: Problem -->
+    <div class="slide bg-gray-900" id="slide-2" style="display: none;">
+        <div class="slide-content">
+            <h2 class="text-5xl font-bold mb-12 text-center">The <span class="text-red-400">$847B Problem</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-gray-800 rounded-lg p-8">
+                    <i class="fas fa-exclamation-triangle text-4xl text-red-400 mb-4"></i>
+                    <h3 class="text-2xl font-bold mb-4">Healthcare Providers Miss Critical Context</h3>
+                    <ul class="space-y-3 text-lg">
+                        <li>• 70% of treatment failures due to emotional factors</li>
+                        <li>• Relationship stress affects 85% of chronic conditions</li>
+                        <li>• Doctors spend <5 minutes understanding patient emotions</li>
+                        <li>• $847B wasted annually on ineffective treatments</li>
+                    </ul>
+                </div>
+                <div class="bg-gray-800 rounded-lg p-8">
+                    <i class="fas fa-chart-line-down text-4xl text-red-400 mb-4"></i>
+                    <h3 class="text-2xl font-bold mb-4">Pharmaceutical Companies Fly Blind</h3>
+                    <ul class="space-y-3 text-lg">
+                        <li>• No real-world emotional treatment data</li>
+                        <li>• 90% of drug trials miss relationship context</li>
+                        <li>• $2.6B average cost per approved drug</li>
+                        <li>• 40% higher success rates with emotional intelligence</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center mt-12">
+                <p class="text-2xl text-yellow-400 font-bold">Healthcare needs emotional intelligence at scale</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3: Solution -->
+    <div class="slide bg-gray-900" id="slide-3" style="display: none;">
+        <div class="slide-content">
+            <h2 class="text-5xl font-bold mb-12 text-center">Our <span class="number-highlight">Revolutionary Solution</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div class="bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg p-8 text-center glow">
+                    <i class="fas fa-robot text-4xl mb-4"></i>
+                    <h3 class="text-xl font-bold mb-4">Claude AI Integration</h3>
+                    <p>Sophisticated sentiment analysis understanding medical treatments, relationship dynamics, and crisis detection</p>
+                </div>
+                <div class="bg-gradient-to-br from-green-600 to-teal-600 rounded-lg p-8 text-center glow">
+                    <i class="fas fa-link text-4xl mb-4"></i>
+                    <h3 class="text-xl font-bold mb-4">Cross-App Correlation</h3>
+                    <p>Unique data from both partners in relationships - impossible for competitors to replicate</p>
+                </div>
+                <div class="bg-gradient-to-br from-purple-600 to-pink-600 rounded-lg p-8 text-center glow">
+                    <i class="fas fa-shield-alt text-4xl mb-4"></i>
+                    <h3 class="text-xl font-bold mb-4">HIPAA Compliant</h3>
+                    <p>Military-grade security with zero-knowledge architecture for healthcare data</p>
+                </div>
+            </div>
+            <div class="bg-gray-800 rounded-lg p-8 text-center">
+                <h3 class="text-2xl font-bold mb-4">What Makes Us Impossible to Replicate</h3>
+                <p class="text-lg">We analyze sentiment from <span class="text-green-400 font-bold">both sides of couples' health journeys</span> - creating correlation insights no other platform can access</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Market Opportunity -->
+    <div class="slide bg-gray-900" id="slide-4" style="display: none;">
+        <div class="slide-content">
+            <h2 class="text-5xl font-bold mb-12 text-center"><span class="number-highlight">$4.3 Trillion</span> Market Opportunity</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                    <canvas id="marketChart" width="400" height="300"></canvas>
+                </div>
+                <div class="space-y-8">
+                    <div class="bg-blue-900 rounded-lg p-6">
+                        <h3 class="text-2xl font-bold mb-2">Healthcare Providers</h3>
+                        <p class="text-3xl font-bold text-blue-400">$2.1T</p>
+                        <p>Clinical decision support, treatment optimization</p>
+                    </div>
+                    <div class="bg-green-900 rounded-lg p-6">
+                        <h3 class="text-2xl font-bold mb-2">Pharmaceutical</h3>
+                        <p class="text-3xl font-bold text-green-400">$1.4T</p>
+                        <p>Real-world evidence, drug development insights</p>
+                    </div>
+                    <div class="bg-purple-900 rounded-lg p-6">
+                        <h3 class="text-2xl font-bold mb-2">Mental Health Tech</h3>
+                        <p class="text-3xl font-bold text-purple-400">$500B</p>
+                        <p>Crisis detection, relationship therapy platforms</p>
+                    </div>
+                    <div class="bg-red-900 rounded-lg p-6">
+                        <h3 class="text-2xl font-bold mb-2">Veterans Mental Health</h3>
+                        <p class="text-3xl font-bold text-red-400">$300B</p>
+                        <p>28M veterans (US+Canada), corporate hiring, family support</p>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-12">
+                <p class="text-xl">Addressable market growing <span class="text-green-400 font-bold">23% annually</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Business Model -->
+    <div class="slide bg-gray-900" id="slide-5" style="display: none;">
+        <div class="slide-content">
+            <h2 class="text-5xl font-bold mb-12 text-center">Revenue Model: <span class="number-highlight">$2.99M - $24.99M ARR</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg p-8">
+                    <h3 class="text-2xl font-bold mb-4">Enterprise SaaS</h3>
+                    <div class="text-4xl font-bold mb-4">$25K/month</div>
+                    <ul class="space-y-2">
+                        <li>• Healthcare providers</li>
+                        <li>• 100M+ analyses/month</li>
+                        <li>• Clinical decision support</li>
+                        <li>• Real-time crisis detection</li>
+                    </ul>
+                    <div class="mt-6 text-sm opacity-80">
+                        Target: 100 enterprise clients = $30M ARR
+                    </div>
+                </div>
+                <div class="bg-gradient-to-br from-green-600 to-green-800 rounded-lg p-8">
+                    <h3 class="text-2xl font-bold mb-4">Research Licensing</h3>
+                    <div class="text-4xl font-bold mb-4">$1.50/record</div>
+                    <ul class="space-y-2">
+                        <li>• Pharmaceutical companies</li>
+                        <li>• Anonymized datasets</li>
+                        <li>• Cross-app correlation data</li>
+                        <li>• Treatment effectiveness insights</li>
+                    </ul>
+                    <div class="mt-6 text-sm opacity-80">
+                        Target: 10M records/year = $15M ARR
+                    </div>
+                </div>
+                <div class="bg-gradient-to-br from-purple-600 to-purple-800 rounded-lg p-8">
+                    <h3 class="text-2xl font-bold mb-4">API Usage</h3>
+                    <div class="text-4xl font-bold mb-4">$0.10/analysis</div>
+                    <ul class="space-y-2">
+                        <li>• Mental health apps</li>
+                        <li>• Relationship platforms</li>
+                        <li>• Telehealth services</li>
+                        <li>• Crisis intervention tools</li>
+                    </ul>
+                    <div class="mt-6 text-sm opacity-80">
+                        Target: 50M analyses/month = $60M ARR
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-12">
+                <p class="text-2xl font-bold">Conservative 3-Year Target: <span class="text-green-400">$105M ARR</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 6: The Story Behind the Revolution -->
+    <div class="slide bg-gray-900" id="slide-6" style="display: none;">
+        <div class="slide-content">
+            <h2 class="text-5xl font-bold mb-8 text-center">The Story Behind the <span class="number-highlight">Revolution</span></h2>
+            <p class="text-2xl text-center mb-12 text-gray-300">From Personal Pain to Global Solution</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-gray-800 rounded-lg p-8">
+                    <h3 class="text-2xl font-bold mb-4 text-red-400">💔 The 3 AM Revelation</h3>
+                    <p class="text-lg mb-4">"It was another sleepless night. My wife was sobbing in the bathroom, overwhelmed by perimenopause symptoms that neither of us understood."</p>
+                    <p class="text-lg mb-4">"I felt completely helpless, watching the woman I love struggle through mood swings and physical changes that seemed to come from nowhere."</p>
+                    <p class="text-lg font-bold text-yellow-400">"I was failing as a husband."</p>
+                </div>
+
+                <div class="bg-gray-800 rounded-lg p-8">
+                    <h3 class="text-2xl font-bold mb-4 text-blue-400">🚀 The Desperate Solution</h3>
+                    <p class="text-lg mb-4">"That night, I made a decision that would change everything. If I couldn't understand what my wife was going through, maybe AI could teach me."</p>
+                    <p class="text-lg mb-4">"I decided to build an app - not for her, but for me - to help me become the partner she deserved during this impossible time."</p>
+                    <p class="text-lg font-bold text-green-400">"I wanted Claude AI to guide me through the emotional minefield of menopause."</p>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-purple-900 to-blue-900 rounded-lg p-8 mt-8 text-center">
+                <h3 class="text-2xl font-bold mb-4">The Unexpected Discovery</h3>
+                <p class="text-xl mb-4">"What began as one desperate husband's attempt to save his marriage evolved into something much bigger:"</p>
+                <p class="text-lg text-gray-300">"It wasn't just my wife. It was <span class="text-yellow-400 font-bold">millions of women</span>, suffering in silence, with partners who felt just as lost and helpless as I did."</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: From Bootstrap to Scale -->
+    <div class="slide bg-gray-900" id="slide-7" style="display: none;">
+        <div class="slide-content">
+            <h2 class="text-5xl font-bold mb-8 text-center">From <span class="text-red-400">Bootstrap</span> to <span class="number-highlight">Scale</span></h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div class="bg-gradient-to-br from-green-600 to-teal-600 rounded-lg p-6 text-center">
+                    <h3 class="text-xl font-bold mb-4">✅ What We Built</h3>
+                    <ul class="text-left space-y-2">
+                        <li>• MenoWellness (LIVE)</li>
+                        <li>• SupportPartner (LIVE)</li>
+                        <li>• Dr. Alex AI Platform</li>
+                        <li>• SentimentAsAService</li>
+                        <li>• 6 more apps (50% complete)</li>
+                    </ul>
+                </div>
+
+                <div class="bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg p-6 text-center">
+                    <h3 class="text-xl font-bold mb-4">🏗️ Enterprise Ready</h3>
+                    <ul class="text-left space-y-2">
+                        <li>• Multi-tenant architecture</li>
+                        <li>• HIPAA compliant</li>
+                        <li>• Employee management</li>
+                        <li>• Auto-scaling infrastructure</li>
+                        <li>• Production deployments</li>
+                    </ul>
+                </div>
+
+                <div class="bg-gradient-to-br from-purple-600 to-pink-600 rounded-lg p-6 text-center">
+                    <h3 class="text-xl font-bold mb-4">💰 Revenue Streams</h3>
+                    <ul class="text-left space-y-2">
+                        <li>• Healthcare B2B</li>
+                        <li>• Corporate Wellness</li>
+                        <li>• Consumer Apps</li>
+                        <li>• Data Licensing</li>
+                        <li>• Pharmaceutical Research</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="bg-red-900 rounded-lg p-8 text-center">
+                <h3 class="text-3xl font-bold mb-4">⏰ The Bootstrap Reality Check</h3>
+                <p class="text-xl mb-4">"Every day we delay is another day millions of women suffer without support."</p>
+                <p class="text-lg text-gray-300">"This mission is bigger than my personal resources. It requires the scale and speed that only strategic investment can provide."</p>
+                <p class="text-2xl font-bold text-yellow-400 mt-6">"The world needs this too badly to bootstrap it slowly."</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8: Dr. Alex AI Ecosystem -->
+    <div class="slide bg-gray-900" id="slide-8" style="display: none;">
+        <div class="slide-content">
+            <h2 class="text-5xl font-bold mb-8 text-center"><span class="number-highlight">Dr. Alex AI</span> Ecosystem</h2>
+            <p class="text-xl text-center mb-12 text-gray-300">Complete Healthcare Intelligence Platform</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                <div class="bg-gray-800 rounded-lg p-6">
+                    <h3 class="text-2xl font-bold mb-4 text-green-400">✅ LIVE Applications</h3>
+                    <div class="space-y-3">
+                        <div class="bg-green-900 rounded p-3">
+                            <h4 class="font-bold">VetSupport</h4>
+                            <p class="text-sm">Veterans mental health platform with military-grade security</p>
+                        </div>
+                        <div class="bg-green-900 rounded p-3">
+                            <h4 class="font-bold">MenoWellness</h4>
+                            <p class="text-sm">Comprehensive menopause support and tracking</p>
+                        </div>
+                        <div class="bg-green-900 rounded p-3">
+                            <h4 class="font-bold">SupportPartner</h4>
+                            <p class="text-sm">World's first partner support healthcare app</p>
+                        </div>
+                        <div class="bg-green-900 rounded p-3">
+                            <h4 class="font-bold">SentimentAsAService</h4>
+                            <p class="text-sm">Claude AI-powered sentiment analysis platform</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-800 rounded-lg p-6">
+                    <h3 class="text-2xl font-bold mb-4 text-yellow-400">🚧 In Development (50% Complete)</h3>
+                    <div class="grid grid-cols-2 gap-2 text-sm">
+                        <div class="bg-yellow-900 rounded p-2">SoberPal</div>
+                        <div class="bg-yellow-900 rounded p-2">MyConfidant</div>
+                        <div class="bg-yellow-900 rounded p-2">Fertility</div>
+                        <div class="bg-yellow-900 rounded p-2">PostpartumCare</div>
+                        <div class="bg-yellow-900 rounded p-2">PregnancyCompanion</div>
+                        <div class="bg-yellow-900 rounded p-2">Personal Development</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-blue-900 to-purple-900 rounded-lg p-8 text-center">
+                <h3 class="text-2xl font-bold mb-4">🏥 Dr. Alex AI Core Platform</h3>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
+                    <div>Clinical Intelligence Co-Pilot</div>
+                    <div>Real-time Crisis Detection</div>
+                    <div>Predictive Analytics</div>
+                    <div>EHR Integration Ready</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 9: Quadruple Revenue Streams -->
+    <div class="slide bg-gray-900" id="slide-9" style="display: none;">
+        <div class="slide-content">
+            <h2 class="text-5xl font-bold mb-8 text-center"><span class="number-highlight">Quadruple</span> Revenue Streams</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg p-6">
+                    <h3 class="text-2xl font-bold mb-4">🏥 Dr. Alex AI Healthcare (B2B)</h3>
+                    <div class="text-3xl font-bold mb-4 text-blue-300">$2,999 - $19,999/month</div>
+                    <ul class="space-y-2 text-sm">
+                        <li>• Hospitals, clinics, healthcare systems</li>
+                        <li>• 40% reduction in administrative burden</li>
+                        <li>• Clinical intelligence co-pilot</li>
+                        <li>• Real-time crisis detection</li>
+                    </ul>
+                </div>
+
+                <div class="bg-gradient-to-br from-green-600 to-green-800 rounded-lg p-6">
+                    <h3 class="text-2xl font-bold mb-4">🏢 Corporate Wellness (B2B)</h3>
+                    <div class="text-3xl font-bold mb-4 text-green-300">$5,000 - $50,000/month</div>
+                    <ul class="space-y-2 text-sm">
+                        <li>• Fortune 500 companies</li>
+                        <li>• First-ever workplace menopause support</li>
+                        <li>• Employee retention tool</li>
+                        <li>• DE&I compliance solution</li>
+                    </ul>
+                </div>
+
+                <div class="bg-gradient-to-br from-purple-600 to-purple-800 rounded-lg p-6">
+                    <h3 class="text-2xl font-bold mb-4">👥 Consumer Applications (B2C)</h3>
+                    <div class="text-3xl font-bold mb-4 text-purple-300">$9.99 - $59.99/month</div>
+                    <ul class="space-y-2 text-sm">
+                        <li>• Women experiencing health transitions</li>
+                        <li>• Veterans & military families</li>
+                        <li>• Partners needing support guidance</li>
+                        <li>• Personalized AI coaching</li>
+                    </ul>
+                </div>
+
+                <div class="bg-gradient-to-br from-yellow-600 to-orange-600 rounded-lg p-6">
+                    <h3 class="text-2xl font-bold mb-4">📊 Data Licensing (B2B)</h3>
+                    <div class="text-3xl font-bold mb-4 text-yellow-300">Multi-Million Contracts</div>
+                    <ul class="space-y-2 text-sm">
+                        <li>• Pharmaceutical companies</li>
+                        <li>• Real-world evidence data</li>
+                        <li>• Cross-app correlation insights</li>
+                        <li>• "Unobtainium data" - impossible elsewhere</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 rounded-lg p-6 mt-8 text-center">
+                <h3 class="text-2xl font-bold mb-4">Conservative Revenue Projections</h3>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div><span class="text-2xl font-bold text-green-400">Year 1:</span><br>$500K</div>
+                    <div><span class="text-2xl font-bold text-blue-400">Year 2:</span><br>$5M</div>
+                    <div><span class="text-2xl font-bold text-purple-400">Year 3:</span><br>$25M</div>
+                    <div><span class="text-2xl font-bold text-yellow-400">Year 5:</span><br>$100M+</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 10: Competitive Advantages -->
+    <div class="slide bg-gray-900" id="slide-10" style="display: none;">
+        <div class="slide-content">
+            <h2 class="text-5xl font-bold mb-8 text-center"><span class="number-highlight">Unassailable</span> Competitive Advantages</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-6">
+                    <div class="bg-gradient-to-r from-blue-900 to-purple-900 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-3 text-blue-300">🤖 Human-AI Collaboration</h3>
+                        <p class="text-sm">10x development efficiency compared to traditional teams. 2-3 year head start over any competitor.</p>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-green-900 to-teal-900 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-3 text-green-300">🏗️ Enterprise Infrastructure</h3>
+                        <p class="text-sm">Production-ready multi-tenant platform with employee management. Immediate corporate deployment capability.</p>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-purple-900 to-pink-900 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-3 text-purple-300">💝 First-Ever Partner Support</h3>
+                        <p class="text-sm">Unique relational health data impossible for competitors to replicate. Network effect through partner advocacy.</p>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="bg-gradient-to-r from-yellow-900 to-orange-900 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-3 text-yellow-300">🔬 "Unobtainium Data"</h3>
+                        <p class="text-sm">Cross-app correlation insights linking different health journeys. Both sides of couples' health experiences.</p>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-red-900 to-pink-900 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-3 text-red-300">🛡️ Military-Grade Security</h3>
+                        <p class="text-sm">HIPAA fortress architecture with zero-knowledge proofs. Enterprise-ready for sensitive healthcare data.</p>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-indigo-900 to-blue-900 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-3 text-indigo-300">✅ Production Traction</h3>
+                        <p class="text-sm">Live applications with real users. Proven technology stack. Validated product-market fit.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 rounded-lg p-8 mt-8 text-center">
+                <h3 class="text-2xl font-bold mb-4">Why We're Impossible to Replicate</h3>
+                <p class="text-lg">"We have built what competitors will take <span class="text-yellow-400 font-bold">years to develop</span> - a complete, production-ready healthcare ecosystem with immediate revenue potential across multiple high-value markets."</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 11: Every VC Has Been Here -->
+    <div class="slide bg-gray-900" id="slide-11" style="display: none;">
+        <div class="slide-content text-center">
+            <h2 class="text-5xl font-bold mb-8">💝 Every VC Has <span class="number-highlight">Been Here</span></h2>
+
+            <div class="bg-gradient-to-r from-purple-900 to-pink-900 rounded-lg p-12 mb-8">
+                <p class="text-2xl mb-6">"Whether it's your spouse, your mother, your sister, your daughter, or yourself - menopause touches every family."</p>
+                <p class="text-xl mb-6 text-gray-300">"And until now, partners have been left completely in the dark, forced to watch their loved ones struggle without tools to help."</p>
+                <p class="text-3xl font-bold text-yellow-400">"This isn't just about returns on investment."</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                <div class="bg-gray-800 rounded-lg p-8">
+                    <h3 class="text-2xl font-bold mb-4 text-blue-400">🌍 Global Impact</h3>
+                    <p class="text-lg mb-4">"This is about being part of the solution to one of healthcare's most neglected crises."</p>
+                    <p class="text-lg">"This is about ensuring no other partner feels as helpless as I did at 3 AM, watching someone they love suffer in silence."</p>
+                </div>
+
+                <div class="bg-gray-800 rounded-lg p-8">
+                    <h3 class="text-2xl font-bold mb-4 text-green-400">💪 Personal Mission</h3>
+                    <p class="text-lg mb-4">"What started as one husband's desperate attempt to understand his wife's journey became the foundation for the most comprehensive healthcare intelligence platform ever built."</p>
+                    <p class="text-lg font-bold text-yellow-400">"Join us in transforming that personal pain into global healing."</p>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-blue-900 to-purple-900 rounded-lg p-8">
+                <h3 class="text-3xl font-bold mb-4">🌟 Ready to Change Healthcare Forever?</h3>
+                <p class="text-xl mb-4">"Behind every metric, every projection, every competitive advantage - is a commitment to ensuring no family ever feels as lost and helpless as mine did."</p>
+                <p class="text-2xl font-bold text-green-400">"This is bigger than business. This is about dignity, understanding, and compassionate care for the people we love most."</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 12: VetSupport - Veterans Mental Health Platform -->
+    <div class="slide bg-gray-900" id="slide-12" style="display: none;">
+        <div class="slide-content">
+            <h2 class="text-5xl font-bold mb-8 text-center"><span class="number-highlight">VetSupport</span></h2>
+            <p class="text-2xl text-center mb-12 text-gray-300">International Veterans Mental Health Platform - Production Ready</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                <div class="bg-gradient-to-br from-red-900 to-red-700 rounded-lg p-8">
+                    <h3 class="text-2xl font-bold mb-6 text-red-300">🎖️ Military-Grade Features</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-center"><i class="fas fa-shield-alt text-red-400 mr-3"></i>Military Culture-Aware UI/UX</li>
+                        <li class="flex items-center"><i class="fas fa-clipboard-check text-red-400 mr-3"></i>PCL-5 (PTSD) & PHQ-9 Assessments</li>
+                        <li class="flex items-center"><i class="fas fa-phone text-red-400 mr-3"></i>Veterans Crisis Line Integration (988)</li>
+                        <li class="flex items-center"><i class="fas fa-user-md text-red-400 mr-3"></i>Veteran Provider Network</li>
+                        <li class="flex items-center"><i class="fas fa-lock text-red-400 mr-3"></i>Zero-Knowledge Architecture</li>
+                    </ul>
+                </div>
+
+                <div class="bg-gradient-to-br from-blue-900 to-blue-700 rounded-lg p-8">
+                    <h3 class="text-2xl font-bold mb-6 text-blue-300">🤖 Alex AI for Veterans</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-center"><i class="fas fa-brain text-blue-400 mr-3"></i>Military Terminology Training</li>
+                        <li class="flex items-center"><i class="fas fa-heart text-blue-400 mr-3"></i>Trauma-Informed Conversations</li>
+                        <li class="flex items-center"><i class="fas fa-exclamation-triangle text-blue-400 mr-3"></i>Crisis Detection & Response</li>
+                        <li class="flex items-center"><i class="fas fa-clock text-blue-400 mr-3"></i>24/7 Availability</li>
+                        <li class="flex items-center"><i class="fas fa-users text-blue-400 mr-3"></i>Peer Support Networks</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-gray-800 rounded-lg p-6 text-center">
+                    <h4 class="text-xl font-bold mb-2 text-green-400">🎯 Market Size</h4>
+                    <p class="text-3xl font-bold mb-2">28M Veterans</p>
+                    <p class="text-sm text-gray-400">US + Canada</p>
+                </div>
+
+                <div class="bg-gray-800 rounded-lg p-6 text-center">
+                    <h4 class="text-xl font-bold mb-2 text-blue-400">💼 Corporate Market</h4>
+                    <p class="text-3xl font-bold mb-2">$300B</p>
+                    <p class="text-sm text-gray-400">Veteran hiring initiatives</p>
+                </div>
+
+                <div class="bg-gray-800 rounded-lg p-6 text-center">
+                    <h4 class="text-xl font-bold mb-2 text-purple-400">🏥 VA Gap</h4>
+                    <p class="text-3xl font-bold mb-2">Long Waits</p>
+                    <p class="text-sm text-gray-400">Limited resources</p>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-red-900 to-blue-900 rounded-lg p-6 mt-8 text-center">
+                <h3 class="text-2xl font-bold mb-4">🚀 Production Status: LIVE</h3>
+                <p class="text-lg">Complete React + TypeScript platform with Supabase backend, military-grade security, and veteran-specific crisis protocols</p>
+                <p class="text-sm text-gray-400 mt-2">GitHub: github.com/jahboukie/veterans-mental-health</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlideIndex = 1;
+        const totalSlides = 12; // Update this when adding more slides
+        
+        document.getElementById('totalSlides').textContent = totalSlides;
+        
+        function showSlide(index) {
+            // Hide all slides
+            for (let i = 1; i <= totalSlides; i++) {
+                const slide = document.getElementById(`slide-${i}`);
+                if (slide) {
+                    slide.style.display = 'none';
+                }
+            }
+            
+            // Show current slide
+            const currentSlide = document.getElementById(`slide-${index}`);
+            if (currentSlide) {
+                currentSlide.style.display = 'flex';
+            }
+            
+            // Update counter
+            document.getElementById('currentSlide').textContent = index;
+            
+            // Initialize charts if on market slide
+            if (index === 4) {
+                setTimeout(initializeMarketChart, 100);
+            }
+        }
+        
+        function nextSlide() {
+            if (currentSlideIndex < totalSlides) {
+                currentSlideIndex++;
+                showSlide(currentSlideIndex);
+            }
+        }
+        
+        function previousSlide() {
+            if (currentSlideIndex > 1) {
+                currentSlideIndex--;
+                showSlide(currentSlideIndex);
+            }
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowRight' || event.key === ' ') {
+                nextSlide();
+            } else if (event.key === 'ArrowLeft') {
+                previousSlide();
+            }
+        });
+        
+        // Initialize market chart
+        function initializeMarketChart() {
+            const ctx = document.getElementById('marketChart');
+            if (ctx && !ctx.chart) {
+                ctx.chart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Healthcare Providers', 'Pharmaceutical', 'Mental Health Tech', 'Veterans Mental Health'],
+                        datasets: [{
+                            data: [2100, 1400, 500, 300],
+                            backgroundColor: ['#3B82F6', '#10B981', '#8B5CF6', '#EF4444'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    color: '#E5E7EB',
+                                    padding: 20
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+        
+        // Initialize first slide
+        showSlide(1);
+    </script>
+</body>
+</html>
