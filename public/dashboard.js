@@ -188,41 +188,78 @@ async function analyzeSentiment() {
     button.disabled = true;
 
     try {
-        // Call real Claude AI API
-        const response = await fetch('/api/sentiment/analyze', {
+        // Enhanced logging for production debugging
+        const apiEndpoint = '/api/sentiment/analyze';
+        const requestData = {
+            text: input,
+            includeEmotions: true,
+            includeKeyTerms: true,
+            healthcareContext: document.getElementById('healthcareContext').checked,
+            relationshipContext: document.getElementById('relationshipContext').checked,
+            crisisDetection: document.getElementById('crisisDetection').checked
+        };
+
+        console.log('🔍 Making API request to:', apiEndpoint);
+        console.log('🔍 Request payload:', requestData);
+        console.log('🔍 Current URL:', window.location.href);
+        console.log('🔍 Environment:', window.location.hostname);
+
+        const response = await fetch(apiEndpoint, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                text: input,
-                includeEmotions: true,
-                includeKeyTerms: true,
-                healthcareContext: document.getElementById('healthcareContext').checked,
-                relationshipContext: document.getElementById('relationshipContext').checked,
-                crisisDetection: document.getElementById('crisisDetection').checked
-            })
+            body: JSON.stringify(requestData)
         });
 
+        console.log('📡 Response status:', response.status);
+        console.log('📡 Response statusText:', response.statusText);
+        console.log('📡 Response headers:', Object.fromEntries(response.headers.entries()));
+        console.log('📡 Response URL:', response.url);
+
         if (!response.ok) {
-            const errorData = await response.json().catch(() => ({}));
-            if (response.status === 503) {
-                throw new Error(`AI service temporarily unavailable: ${errorData.message || 'Please try again in a moment'}`);
+            let errorText;
+            try {
+                errorText = await response.text();
+                console.error('❌ API Error Response (text):', errorText);
+            } catch (e) {
+                console.error('❌ Could not read error response:', e);
+                errorText = 'Could not read error response';
             }
-            throw new Error(`API call failed: ${response.status} - ${errorData.error || 'Unknown error'}`);
+
+            let errorData = {};
+            try {
+                errorData = JSON.parse(errorText);
+                console.error('❌ API Error Response (parsed):', errorData);
+            } catch (e) {
+                console.error('❌ Error response is not JSON:', errorText);
+            }
+
+            if (response.status === 503) {
+                throw new Error(`AI service temporarily unavailable: ${errorData.message || errorText || 'Please try again in a moment'}`);
+            }
+            throw new Error(`API call failed: ${response.status} ${response.statusText} - ${errorData.error || errorText || 'Unknown error'}`);
         }
 
-        const apiResult = await response.json();
+        let apiResult;
+        try {
+            const responseText = await response.text();
+            console.log('✅ Raw API Response:', responseText);
+            apiResult = JSON.parse(responseText);
+            console.log('✅ Parsed API Response:', apiResult);
+        } catch (e) {
+            console.error('❌ Failed to parse API response:', e);
+            throw new Error('Invalid JSON response from API');
+        }
 
-        console.log('API Response:', apiResult);
-        console.log('API Response Type:', typeof apiResult);
-        console.log('API Response Keys:', Object.keys(apiResult));
-        console.log('API Success Property:', apiResult.success);
+        console.log('✅ API Response Type:', typeof apiResult);
+        console.log('✅ API Response Keys:', Object.keys(apiResult));
+        console.log('✅ API Success Property:', apiResult.success);
 
         if (!apiResult.success) {
-            console.error('API Error Details:', apiResult);
-            console.error('API Error Message:', apiResult.error);
-            console.error('API Error Type:', typeof apiResult.error);
+            console.error('❌ API Error Details:', apiResult);
+            console.error('❌ API Error Message:', apiResult.error);
+            console.error('❌ API Error Type:', typeof apiResult.error);
             throw new Error('API returned error: ' + (apiResult.error || 'Unknown error'));
         }
 
