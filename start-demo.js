@@ -40,67 +40,41 @@ app.post('/api/sentiment/analyze', async (req, res) => {
   if (claudeApiKey && text) {
     try {
       console.log('Attempting Claude AI analysis for:', text.substring(0, 50) + '...');
-      // Use real Claude AI analysis
+      // Use real Claude AI analysis with retry logic
       const claudeResult = await analyzeWithClaudeAI(text, claudeApiKey);
       console.log('Claude AI analysis successful');
       return res.json(claudeResult);
     } catch (error) {
-      console.error('Claude AI failed, falling back to mock:', error.message);
+      console.error('Claude AI failed:', error.message);
       console.error('Full error:', error);
       console.error('API Key present:', !!claudeApiKey);
+
+      // Check if it's a timeout error and suggest retry
+      const isTimeout = error.message.includes('PROCESSING_TIMEOUT') || error.message.includes('timeout');
+
+      return res.status(503).json({
+        success: false,
+        error: isTimeout ? 'Analysis taking longer than expected. Please try again.' : 'Claude AI analysis temporarily unavailable.',
+        message: isTimeout ? 'Complex healthcare analysis requires more processing time. Please retry for complete results.' : 'Our AI service is experiencing high demand. This ensures you get real analysis, not mock data.',
+        retry_suggested: true,
+        processing_time_exceeded: isTimeout
+      });
     }
   } else {
-    console.log('No Claude API key or text, using mock data');
+    console.log('No Claude API key or text provided');
+    return res.status(400).json({
+      success: false,
+      error: 'Claude AI API key required for analysis. This platform uses real AI, not mock data.',
+      message: 'Please configure ANTHROPIC_API_KEY environment variable for live analysis.'
+    });
   }
 
-  // Fallback to mock analysis for demo
-  const mockResult = {
-    sentiment: {
-      score: Math.random() * 2 - 1,
-      category: Math.random() > 0.5 ? 'positive' : 'negative',
-      confidence: Math.random() * 0.3 + 0.7
-    },
-    emotions: {
-      primary: 'hope',
-      secondary: ['relief', 'gratitude'],
-      emotional_intensity: Math.random() * 0.5 + 0.5
-    },
-    healthcareContext: {
-      indicators: [
-        {
-          term: 'treatment',
-          sentiment_impact: 0.4,
-          context: 'Medical treatment mentioned positively'
-        }
-      ],
-      health_status_trend: 'improving',
-      treatment_sentiment: 'positive'
-    },
-    relationshipContext: {
-      indicators: [
-        {
-          term: 'support',
-          sentiment_impact: 0.3,
-          context: 'Support system mentioned'
-        }
-      ],
-      relationship_health: 'healthy',
-      support_level: 'high'
-    },
-    crisisAssessment: {
-      risk_level: 'low',
-      indicators: [],
-      recommended_action: 'monitoring'
-    },
-    insights: {
-      overall_assessment: 'Positive treatment response with good emotional state',
-      recommendations: ['Continue current treatment plan']
-    },
-    processingTime: Math.random() * 500 + 200,
-    provider: 'claude-ai-demo'
-  };
-
-  res.json(mockResult);
+  // No fallback - only real Claude AI analysis
+  return res.status(500).json({
+    success: false,
+    error: 'Claude AI analysis failed. No mock data available.',
+    message: 'This platform provides only real AI analysis for accurate healthcare insights.'
+  });
 });
 
 // Serve main dashboard
@@ -163,67 +137,68 @@ app.listen(PORT, () => {
 async function analyzeWithClaudeAI(text, apiKey) {
   const startTime = Date.now();
 
-  const prompt = `You are an expert sentiment analysis AI specializing in healthcare and relationship contexts. Analyze the following text and provide a comprehensive sentiment analysis.
+  const prompt = `Analyze this healthcare text quickly and accurately:
 
-TEXT TO ANALYZE:
 "${text}"
 
-ANALYSIS REQUIREMENTS:
-- Focus on healthcare-specific sentiment indicators (symptoms, treatments, recovery, pain, etc.)
-- Analyze relationship dynamics (support, communication, conflict, connection, etc.)
-- Assess crisis risk level (emergency mental health situations, suicidal ideation, etc.)
-- Identify primary emotions present in the text
-- Extract key terms and phrases that drive the sentiment
+Provide JSON response with:
+- Context detection (primary_context, has_military_indicators)
+- Sentiment score (-1 to 1), category, confidence
+- Key emotions with scores (0-1): isolation, hopelessness, anxiety, longing, grief, frustration, shame, trauma_response, nostalgia, loss, sadness, love, confusion, anger, fear, hope
+- Healthcare indicators and trend
+- Relationship health and support level
+- Crisis risk and recommended action
+- Veteran context (only if military terms present)
+- Brief recommendations
 
-Return your analysis in this exact JSON format:
+JSON format:
 {
-  "sentiment_score": <number between -1 and 1>,
+  "context_detection": {
+    "primary_context": "<menopause|mental_health|chronic_illness|veteran_transition|relationship_issues>",
+    "has_military_indicators": <true|false>
+  },
+  "sentiment_score": <-1 to 1>,
   "sentiment_category": "<positive|negative|neutral|mixed>",
-  "confidence": <number between 0 and 1>,
+  "confidence": <0 to 1>,
   "emotions": {
-    "primary": "<primary emotion>",
-    "secondary": ["<emotion1>", "<emotion2>"],
-    "emotional_intensity": <number between 0 and 1>
+    "primary": "<emotion>",
+    "detailed_emotions": {
+      "isolation": <0-1 or null>,
+      "hopelessness": <0-1 or null>,
+      "anxiety": <0-1 or null>,
+      "frustration": <0-1 or null>,
+      "sadness": <0-1 or null>,
+      "love": <0-1 or null>,
+      "fear": <0-1 or null>,
+      "hope": <0-1 or null>
+    }
   },
   "healthcare_context": {
-    "indicators": [
-      {
-        "term": "<healthcare term>",
-        "sentiment_impact": <number between -1 and 1>,
-        "context": "<explanation>"
-      }
-    ],
     "health_status_trend": "<improving|stable|declining>",
     "treatment_sentiment": "<positive|negative|neutral>"
   },
   "relationship_context": {
-    "indicators": [
-      {
-        "term": "<relationship term>",
-        "sentiment_impact": <number between -1 and 1>,
-        "context": "<explanation>"
-      }
-    ],
     "relationship_health": "<healthy|strained|supportive>",
-    "support_level": "<high|medium|low>",
-    "communication_quality": "<good|fair|poor>"
+    "support_level": "<high|medium|low>"
+  },
+  "veteran_context": {
+    "applicable": <true if military terms detected, false otherwise>,
+    "employment_status": "<stable|unstable|unknown>",
+    "ptsd_markers": ["<symptoms if detected>"]
   },
   "crisis_assessment": {
-    "risk_level": "<none|low|medium|high|critical>",
-    "indicators": ["<risk indicators if any>"],
-    "recommended_action": "<none|monitoring|professional_support|emergency>"
+    "risk_level": "<low|medium|high>",
+    "recommended_action": "<monitoring|professional_support|emergency>",
+    "resources": ["<key resources>"]
   },
-  "insights": {
-    "overall_assessment": "<brief clinical assessment>",
-    "recommendations": ["<actionable recommendations>"]
-  },
-  "key_terms": ["<important terms from the text>"]
+  "recommendations": ["<brief actionable recommendations>"]
 }`;
 
   try {
+    // Performance optimization: Use faster model with timeout
     const response = await axios.post('https://api.anthropic.com/v1/messages', {
       model: 'claude-3-5-sonnet-20241022',
-      max_tokens: 1500,
+      max_tokens: 700, // Optimized for speed while maintaining core analysis
       messages: [
         {
           role: 'user',
@@ -235,7 +210,8 @@ Return your analysis in this exact JSON format:
         'Content-Type': 'application/json',
         'x-api-key': apiKey,
         'anthropic-version': '2023-06-01'
-      }
+      },
+      timeout: 8000 // 8 second timeout to force faster processing
     });
 
     console.log('Claude AI raw response:', response.data.content[0].text);
@@ -254,6 +230,7 @@ Return your analysis in this exact JSON format:
     return {
       success: true,
       result: {
+        contextDetection: analysis.context_detection,
         sentiment: {
           score: analysis.sentiment_score,
           category: analysis.sentiment_category,
@@ -262,6 +239,7 @@ Return your analysis in this exact JSON format:
         emotions: analysis.emotions,
         healthcareContext: analysis.healthcare_context,
         relationshipContext: analysis.relationship_context,
+        veteranContext: analysis.veteran_context,
         crisisAssessment: analysis.crisis_assessment,
         insights: analysis.insights,
         keyTerms: analysis.key_terms,
@@ -271,8 +249,20 @@ Return your analysis in this exact JSON format:
     };
 
   } catch (error) {
+    const processingTime = Date.now() - startTime;
     console.error('Claude AI API error:', error.response?.data || error.message);
-    throw error;
+    console.error('Processing time before error:', processingTime + 'ms');
+
+    // Enhanced error categorization
+    if (error.code === 'ECONNABORTED' || processingTime > 8000) {
+      throw new Error('PROCESSING_TIMEOUT: Analysis took too long');
+    } else if (error.response?.status === 503) {
+      throw new Error('MODEL_UNAVAILABLE: AI service temporarily unavailable');
+    } else if (error.response?.status === 400) {
+      throw new Error('INVALID_INPUT: Text format not supported');
+    } else {
+      throw error;
+    }
   }
 }
 
