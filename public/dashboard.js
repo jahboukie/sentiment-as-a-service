@@ -1,5 +1,7 @@
-// SentimentAsAService Enterprise Dashboard JavaScript
-// Military-Grade Healthcare Intelligence Platform
+// MenoWellness + Partner Support Platform
+// Clean Demo Version for VC Presentation
+
+console.log('🌸 PLATFORM: MenoWellness + Partner Support Ecosystem Loaded');
 
 // Global variables
 let sentimentChart, correlationChart;
@@ -145,14 +147,14 @@ function initializeCharts() {
         correlationChart = new Chart(correlationCtx, {
             type: 'radar',
             data: {
-                labels: ['Mood-Support', 'Treatment-Adherence', 'Crisis-Prevention', 'Relationship-Health', 'Recovery-Rate'],
+                labels: ['Symptom Relief', 'Partner Understanding', 'Treatment Adherence', 'Relationship Health', 'Quality of Life'],
                 datasets: [{
-                    label: 'Correlation Strength',
+                    label: 'Menopause Care Correlation',
                     data: [0.87, 0.75, 0.92, 0.68, 0.84],
-                    borderColor: '#F59E0B',
-                    backgroundColor: 'rgba(245, 158, 11, 0.2)',
-                    pointBackgroundColor: '#F59E0B',
-                    pointBorderColor: '#F59E0B'
+                    borderColor: '#EC4899',
+                    backgroundColor: 'rgba(236, 72, 153, 0.2)',
+                    pointBackgroundColor: '#EC4899',
+                    pointBorderColor: '#EC4899'
                 }]
             },
             options: {
@@ -278,21 +280,14 @@ async function analyzeSentiment() {
     }
 }
 
-// Convert API result to display format
+// Convert API result to menopause-focused format
 function convertApiResultToDisplayFormat(apiResult) {
-    console.log('Converting API result:', apiResult);
+    console.log('🌸 Converting to menopause format:', apiResult);
 
-    // Handle emotions - Claude AI returns different structure
+    // Extract emotions from detailed_emotions structure
     let emotions = {};
-    if (apiResult.emotions) {
-        if (apiResult.emotions.primary && apiResult.emotions.emotional_intensity) {
-            emotions[apiResult.emotions.primary] = apiResult.emotions.emotional_intensity;
-        }
-        if (apiResult.emotions.secondary && Array.isArray(apiResult.emotions.secondary)) {
-            apiResult.emotions.secondary.forEach(emotion => {
-                emotions[emotion] = 0.7; // Default intensity for secondary emotions
-            });
-        }
+    if (apiResult.emotions?.detailed_emotions) {
+        emotions = apiResult.emotions.detailed_emotions;
     }
 
     return {
@@ -302,24 +297,26 @@ function convertApiResultToDisplayFormat(apiResult) {
             confidence: apiResult.sentiment.confidence
         },
         emotions: emotions,
-        healthcareContext: apiResult.healthcareContext ? {
-            health_status_trend: apiResult.healthcareContext.health_status_trend,
-            treatment_sentiment: apiResult.healthcareContext.treatment_sentiment,
-            indicators: apiResult.healthcareContext.indicators || []
-        } : null,
-        relationshipContext: apiResult.relationshipContext ? {
-            relationship_health: apiResult.relationshipContext.relationship_health,
-            support_level: apiResult.relationshipContext.support_level,
-            communication_quality: apiResult.relationshipContext.communication_quality,
-            indicators: apiResult.relationshipContext.indicators || []
-        } : null,
-        crisisAssessment: apiResult.crisisAssessment ? {
-            risk_level: apiResult.crisisAssessment.risk_level,
-            recommended_action: apiResult.crisisAssessment.recommended_action,
-            indicators: apiResult.crisisAssessment.indicators || []
-        } : null,
+        healthcareContext: {
+            health_trend: apiResult.healthcareContext?.health_status_trend || 'monitoring',
+            treatment_sentiment: apiResult.healthcareContext?.treatment_sentiment || 'neutral',
+            indicators: apiResult.healthcareContext?.indicators || []
+        },
+        relationshipContext: {
+            relationship_health: apiResult.relationshipContext?.relationship_health || 'stable',
+            support_level: apiResult.relationshipContext?.support_level || 'developing',
+            communication: apiResult.relationshipContext?.communication || 'improving'
+        },
+        contextDetection: {
+            primary_context: apiResult.contextDetection?.primary_context || 'menopause',
+            confidence: apiResult.contextDetection?.confidence || 0.9
+        },
+        crisisAssessment: {
+            risk_level: apiResult.crisisAssessment?.risk_level || 'low',
+            recommended_action: apiResult.crisisAssessment?.recommended_action || 'monitoring'
+        },
         processingTime: apiResult.processingTime || 0,
-        provider: apiResult.provider || 'claude-ai'
+        provider: 'Dr. Alex AI - Menopause Specialist'
     };
 }
 
@@ -433,75 +430,131 @@ function assessCrisisRisk(text) {
     };
 }
 
-// Display analysis results
+// Display menopause-optimized results
 function displayAnalysisResults(results) {
+    console.log('🌸 Displaying menopause-optimized results');
+
     const resultsContainer = document.getElementById('analysisResults');
-    
+
     resultsContainer.innerHTML = `
         <div class="space-y-4">
-            <!-- Sentiment Score -->
-            <div class="bg-gray-700 rounded-lg p-4">
-                <h4 class="font-semibold mb-2">Sentiment Analysis</h4>
-                <div class="flex items-center justify-between mb-2">
-                    <span>Score:</span>
-                    <span class="font-bold ${results.sentiment.score > 0 ? 'text-green-400' : results.sentiment.score < 0 ? 'text-red-400' : 'text-yellow-400'}">${results.sentiment.score}</span>
-                </div>
-                <div class="flex items-center justify-between mb-2">
-                    <span>Category:</span>
-                    <span class="font-bold capitalize ${results.sentiment.category === 'positive' ? 'text-green-400' : results.sentiment.category === 'negative' ? 'text-red-400' : 'text-yellow-400'}">${results.sentiment.category}</span>
-                </div>
-                <div class="flex items-center justify-between">
-                    <span>Confidence:</span>
-                    <span class="font-bold">${Math.round(results.sentiment.confidence * 100)}%</span>
+            <!-- Menopause Journey Header -->
+            <div class="bg-gradient-to-r from-pink-800 to-purple-800 rounded-lg p-4 border-l-4 border-pink-400">
+                <h4 class="font-semibold mb-2 text-pink-200">🌸 Menopause Journey Analysis</h4>
+                <div class="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                        <span class="text-pink-300">Analysis Focus:</span>
+                        <span class="block font-bold text-white">Hormone Therapy & Relationship</span>
+                    </div>
+                    <div>
+                        <span class="text-pink-300">Apps Integrated:</span>
+                        <span class="block font-bold text-white">MenoWellness + Partner Support</span>
+                    </div>
                 </div>
             </div>
 
-            <!-- Emotions -->
+            <!-- Wellbeing Overview -->
+            <div class="bg-gray-700 rounded-lg p-4">
+                <h4 class="font-semibold mb-3 text-pink-300">Wellbeing Overview</h4>
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold ${results.sentiment.score > 0 ? 'text-green-400' : results.sentiment.score < -0.3 ? 'text-red-400' : 'text-yellow-400'}">${Math.round((results.sentiment.score + 1) * 50)}%</div>
+                        <div class="text-sm text-gray-400">Overall Wellbeing</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold ${results.healthcareContext.treatment_sentiment === 'positive' ? 'text-green-400' : 'text-yellow-400'}">${results.healthcareContext.treatment_sentiment === 'positive' ? 'Good' : 'Fair'}</div>
+                        <div class="text-sm text-gray-400">Treatment Response</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold ${results.relationshipContext.support_level === 'high' ? 'text-green-400' : results.relationshipContext.support_level === 'medium' ? 'text-yellow-400' : 'text-blue-400'}">${results.relationshipContext.support_level}</div>
+                        <div class="text-sm text-gray-400">Partner Support</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Emotional Landscape -->
             ${Object.keys(results.emotions).length > 0 ? `
             <div class="bg-gray-700 rounded-lg p-4">
-                <h4 class="font-semibold mb-2">Detected Emotions</h4>
-                <div class="space-y-2">
-                    ${Object.entries(results.emotions).map(([emotion, intensity]) => `
-                        <div class="flex items-center justify-between">
-                            <span class="capitalize">${emotion}:</span>
-                            <div class="flex items-center">
-                                <div class="w-20 bg-gray-600 rounded-full h-2 mr-2">
-                                    <div class="bg-blue-400 h-2 rounded-full" style="width: ${intensity * 100}%"></div>
+                <h4 class="font-semibold mb-3 text-pink-300">Emotional Landscape</h4>
+                <div class="grid grid-cols-2 gap-3">
+                    ${Object.entries(results.emotions)
+                        .filter(([_, intensity]) => intensity > 0.1)
+                        .sort(([,a], [,b]) => b - a)
+                        .slice(0, 6)
+                        .map(([emotion, intensity]) => `
+                            <div class="flex justify-between items-center p-2 bg-gray-600 rounded">
+                                <span class="capitalize text-sm">${emotion.replace('_', ' ')}</span>
+                                <div class="flex items-center">
+                                    <div class="w-16 bg-gray-500 rounded-full h-2 mr-2">
+                                        <div class="bg-pink-400 h-2 rounded-full" style="width: ${intensity * 100}%"></div>
+                                    </div>
+                                    <span class="text-xs text-gray-300">${Math.round(intensity * 100)}%</span>
                                 </div>
-                                <span class="text-sm">${Math.round(intensity * 100)}%</span>
                             </div>
-                        </div>
-                    `).join('')}
+                        `).join('')}
                 </div>
             </div>
             ` : ''}
 
-            <!-- Healthcare Context -->
-            ${results.healthcareContext ? `
+            <!-- MenoWellness Insights -->
             <div class="bg-gray-700 rounded-lg p-4">
-                <h4 class="font-semibold mb-2">Healthcare Context</h4>
-                <div class="space-y-2">
-                    <div class="flex justify-between">
-                        <span>Health Trend:</span>
-                        <span class="capitalize font-bold text-green-400">${results.healthcareContext.health_status_trend}</span>
+                <h4 class="font-semibold mb-3 text-pink-300">🏥 MenoWellness Insights</h4>
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span>Symptom Management:</span>
+                        <span class="font-bold ${results.healthcareContext.health_trend === 'improving' ? 'text-green-400' : 'text-yellow-400'}">${getMenopauseSymptomStatus(results)}</span>
                     </div>
-                    <div class="flex justify-between">
-                        <span>Treatment Sentiment:</span>
-                        <span class="capitalize font-bold text-blue-400">${results.healthcareContext.treatment_sentiment}</span>
+                    <div class="flex justify-between items-center">
+                        <span>Treatment Satisfaction:</span>
+                        <span class="font-bold text-blue-400">${results.healthcareContext.treatment_sentiment}</span>
                     </div>
-                    ${results.healthcareContext.indicators.length > 0 ? `
-                        <div class="mt-2">
-                            <span class="text-sm text-gray-300">Indicators:</span>
-                            <ul class="text-sm mt-1 space-y-1">
-                                ${results.healthcareContext.indicators.map(indicator => `
-                                    <li class="text-gray-400">• ${indicator.context}</li>
-                                `).join('')}
-                            </ul>
-                        </div>
-                    ` : ''}
+                    <div class="bg-pink-900 rounded p-3 mt-3">
+                        <h5 class="text-sm font-semibold text-pink-300 mb-2">💡 Personalized Recommendations</h5>
+                        <ul class="text-xs space-y-1">
+                            ${generateMenopauseRecommendations(results).map(rec => `
+                                <li class="text-pink-100">• ${rec}</li>
+                            `).join('')}
+                        </ul>
+                    </div>
                 </div>
             </div>
-            ` : ''}
+
+            <!-- Partner Support Insights -->
+            <div class="bg-gray-700 rounded-lg p-4">
+                <h4 class="font-semibold mb-3 text-purple-300">💕 Partner Support Insights</h4>
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span>Relationship Health:</span>
+                        <span class="font-bold ${results.relationshipContext.relationship_health === 'supportive' ? 'text-green-400' : 'text-yellow-400'}">${results.relationshipContext.relationship_health}</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span>Communication Quality:</span>
+                        <span class="font-bold text-purple-400">${results.relationshipContext.communication}</span>
+                    </div>
+                    <div class="bg-purple-900 rounded p-3 mt-3">
+                        <h5 class="text-sm font-semibold text-purple-300 mb-2">💭 Relationship Support</h5>
+                        <ul class="text-xs space-y-1">
+                            ${generatePartnerSupportRecommendations(results).map(rec => `
+                                <li class="text-purple-100">• ${rec}</li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dr. Alex AI Assessment -->
+            <div class="bg-gradient-to-r from-blue-800 to-indigo-800 rounded-lg p-4">
+                <h4 class="font-semibold mb-3 text-blue-200">🤖 Dr. Alex AI Assessment</h4>
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center">
+                        <span>Care Priority:</span>
+                        <span class="font-bold ${results.crisisAssessment.risk_level === 'low' ? 'text-green-400' : 'text-yellow-400'}">${getMenopauseCareLevel(results.crisisAssessment.risk_level)}</span>
+                    </div>
+                    <div class="bg-blue-900 rounded p-3">
+                        <p class="text-sm text-blue-100">${generateDrAlexInsight(results)}</p>
+                    </div>
+                </div>
+            </div>
 
             <!-- Relationship Context -->
             ${results.relationshipContext ? `
@@ -547,20 +600,26 @@ function displayAnalysisResults(results) {
             </div>
             ` : ''}
 
-            <!-- Processing Info -->
+            <!-- Platform Integration -->
             <div class="bg-gray-700 rounded-lg p-4">
-                <h4 class="font-semibold mb-2">Processing Information</h4>
-                <div class="flex justify-between text-sm">
-                    <span>Processing Time:</span>
-                    <span>${Math.round(results.processingTime)}ms</span>
-                </div>
-                <div class="flex justify-between text-sm">
-                    <span>AI Provider:</span>
-                    <span class="claude-badge px-2 py-1 rounded text-xs">Claude AI</span>
-                </div>
-                <div class="flex justify-between text-sm">
-                    <span>Security:</span>
-                    <span class="security-badge px-2 py-1 rounded text-xs">Zero-Knowledge</span>
+                <h4 class="font-semibold mb-2">Platform Information</h4>
+                <div class="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                        <span>Processing Time:</span>
+                        <span class="font-bold ml-2">${Math.round(results.processingTime)}ms</span>
+                    </div>
+                    <div>
+                        <span>AI Provider:</span>
+                        <span class="font-bold ml-2">Dr. Alex AI</span>
+                    </div>
+                    <div>
+                        <span>Platform:</span>
+                        <span class="font-bold ml-2 text-pink-400">MenoWellness Ecosystem</span>
+                    </div>
+                    <div>
+                        <span>Security:</span>
+                        <span class="font-bold ml-2 text-green-400">Zero-Knowledge</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -613,6 +672,74 @@ function initializeDemoData() {
     const input = document.getElementById('sentimentInput');
     if (input && !input.value) {
         input.value = exampleTexts[Math.floor(Math.random() * exampleTexts.length)];
+    }
+}
+
+// Helper functions for menopause-specific analysis
+function getMenopauseSymptomStatus(results) {
+    if (results.emotions.hope > 0.6 && results.healthcareContext.health_trend === 'improving') {
+        return 'Well Controlled';
+    } else if (results.emotions.frustration > 0.5) {
+        return 'Optimizing Treatment';
+    } else {
+        return 'Stable Progress';
+    }
+}
+
+function generateMenopauseRecommendations(results) {
+    const recommendations = [];
+
+    if (results.emotions.hope > 0.6) {
+        recommendations.push('Continue current hormone therapy - showing excellent response');
+    }
+    if (results.emotions.frustration > 0.4) {
+        recommendations.push('Consider symptom tracking to optimize treatment timing');
+    }
+    if (results.relationshipContext.support_level !== 'high') {
+        recommendations.push('Partner education resources may enhance support quality');
+    }
+
+    return recommendations.length > 0 ? recommendations : [
+        'Maintain regular follow-ups with healthcare provider',
+        'Continue balanced approach to symptom management'
+    ];
+}
+
+function generatePartnerSupportRecommendations(results) {
+    const recommendations = [];
+
+    if (results.emotions.love > 0.3) {
+        recommendations.push('Strong relationship foundation - focus on communication during transition');
+    }
+    if (results.relationshipContext.relationship_health === 'strained') {
+        recommendations.push('Couples communication strategies for menopause transition');
+    }
+    if (results.emotions.frustration > 0.4) {
+        recommendations.push('Partner menopause education to improve understanding');
+    }
+
+    return recommendations.length > 0 ? recommendations : [
+        'Maintain open dialogue about menopause experience',
+        'Regular check-ins about relationship needs and changes'
+    ];
+}
+
+function getMenopauseCareLevel(riskLevel) {
+    const levels = {
+        'low': 'Routine Monitoring',
+        'medium': 'Enhanced Support',
+        'high': 'Intensive Care'
+    };
+    return levels[riskLevel] || 'Personalized Care';
+}
+
+function generateDrAlexInsight(results) {
+    if (results.emotions.hope > 0.6) {
+        return "Excellent treatment trajectory observed. The combination of positive treatment response and strong emotional resilience suggests optimal menopause management. Continue current approach with regular monitoring.";
+    } else if (results.emotions.frustration > 0.5) {
+        return "Treatment optimization opportunity identified. Consider collaborative approach with healthcare provider to fine-tune hormone therapy and explore additional symptom management strategies.";
+    } else {
+        return "Stable menopause transition progress. The balanced emotional profile suggests good adaptation to treatment. Maintain current care plan with focus on partner support integration.";
     }
 }
 
