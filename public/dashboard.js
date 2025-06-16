@@ -254,14 +254,31 @@ async function analyzeSentiment() {
         const apiResult = await response.json();
 
         console.log('API Response:', apiResult);
+        console.log('API Response Keys:', Object.keys(apiResult));
+        console.log('Has success property:', 'success' in apiResult);
 
-        if (!apiResult.success) {
-            console.error('API Error:', apiResult);
-            throw new Error('API returned error: ' + (apiResult.error || 'Unknown error'));
+        // Handle both localhost format {success: true, result: {...}} and Vercel format {...}
+        let actualResult;
+        if ('success' in apiResult) {
+            // Localhost format with success wrapper
+            if (!apiResult.success) {
+                console.error('API Error:', apiResult);
+                throw new Error('API returned error: ' + (apiResult.error || 'Unknown error'));
+            }
+            actualResult = apiResult.result;
+            console.log('Using localhost format - result:', actualResult);
+        } else if (apiResult.sentiment && apiResult.emotions) {
+            // Vercel format - direct result without wrapper
+            console.log('Using Vercel direct format');
+            actualResult = apiResult;
+        } else {
+            // Unknown format
+            console.error('Unknown API response format:', apiResult);
+            throw new Error('Unknown API response format');
         }
 
         // Convert API result to display format
-        const results = convertApiResultToDisplayFormat(apiResult.result);
+        const results = convertApiResultToDisplayFormat(actualResult);
         displayAnalysisResults(results);
 
     } catch (error) {
