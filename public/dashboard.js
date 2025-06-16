@@ -5,6 +5,47 @@
 let sentimentChart, correlationChart;
 let isAnalyzing = false;
 
+// Copy text to clipboard function for menopause examples
+function copyToClipboard(text, exampleName) {
+    navigator.clipboard.writeText(text).then(function() {
+        // Show success notification
+        const notification = document.getElementById('copyNotification');
+        const message = document.getElementById('copyMessage');
+        message.textContent = `${exampleName} copied to clipboard!`;
+        notification.style.display = 'block';
+
+        // Auto-paste into textarea
+        document.getElementById('sentimentInput').value = text;
+
+        // Hide notification after 3 seconds
+        setTimeout(() => {
+            notification.style.display = 'none';
+        }, 3000);
+    }).catch(function(err) {
+        console.error('Failed to copy text: ', err);
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+
+        // Auto-paste into textarea
+        document.getElementById('sentimentInput').value = text;
+
+        // Show notification
+        const notification = document.getElementById('copyNotification');
+        const message = document.getElementById('copyMessage');
+        message.textContent = `${exampleName} copied to clipboard!`;
+        notification.style.display = 'block';
+
+        setTimeout(() => {
+            notification.style.display = 'none';
+        }, 3000);
+    });
+}
+
 // Initialize dashboard on page load
 document.addEventListener('DOMContentLoaded', function() {
     initializeCharts();
@@ -188,78 +229,32 @@ async function analyzeSentiment() {
     button.disabled = true;
 
     try {
-        // Enhanced logging for production debugging
-        const apiEndpoint = '/api/sentiment/analyze';
-        const requestData = {
-            text: input,
-            includeEmotions: true,
-            includeKeyTerms: true,
-            healthcareContext: document.getElementById('healthcareContext').checked,
-            relationshipContext: document.getElementById('relationshipContext').checked,
-            crisisDetection: document.getElementById('crisisDetection').checked
-        };
-
-        console.log('🔍 Making API request to:', apiEndpoint);
-        console.log('🔍 Request payload:', requestData);
-        console.log('🔍 Current URL:', window.location.href);
-        console.log('🔍 Environment:', window.location.hostname);
-
-        const response = await fetch(apiEndpoint, {
+        // Call real Claude AI API
+        const response = await fetch('/api/sentiment/analyze', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(requestData)
+            body: JSON.stringify({
+                text: input,
+                includeEmotions: true,
+                includeKeyTerms: true,
+                healthcareContext: document.getElementById('healthcareContext').checked,
+                relationshipContext: document.getElementById('relationshipContext').checked,
+                crisisDetection: document.getElementById('crisisDetection').checked
+            })
         });
 
-        console.log('📡 Response status:', response.status);
-        console.log('📡 Response statusText:', response.statusText);
-        console.log('📡 Response headers:', Object.fromEntries(response.headers.entries()));
-        console.log('📡 Response URL:', response.url);
-
         if (!response.ok) {
-            let errorText;
-            try {
-                errorText = await response.text();
-                console.error('❌ API Error Response (text):', errorText);
-            } catch (e) {
-                console.error('❌ Could not read error response:', e);
-                errorText = 'Could not read error response';
-            }
-
-            let errorData = {};
-            try {
-                errorData = JSON.parse(errorText);
-                console.error('❌ API Error Response (parsed):', errorData);
-            } catch (e) {
-                console.error('❌ Error response is not JSON:', errorText);
-            }
-
-            if (response.status === 503) {
-                throw new Error(`AI service temporarily unavailable: ${errorData.message || errorText || 'Please try again in a moment'}`);
-            }
-            throw new Error(`API call failed: ${response.status} ${response.statusText} - ${errorData.error || errorText || 'Unknown error'}`);
+            throw new Error(`API call failed: ${response.status}`);
         }
 
-        let apiResult;
-        try {
-            const responseText = await response.text();
-            console.log('✅ Raw API Response:', responseText);
-            apiResult = JSON.parse(responseText);
-            console.log('✅ Parsed API Response:', apiResult);
-        } catch (e) {
-            console.error('❌ Failed to parse API response:', e);
-            throw new Error('Invalid JSON response from API');
-        }
+        const apiResult = await response.json();
 
-        console.log('✅ API Response Type:', typeof apiResult);
-        console.log('✅ API Response Keys:', Object.keys(apiResult));
-        console.log('✅ API Success Property:', apiResult.success);
+        console.log('API Response:', apiResult);
 
         if (!apiResult.success) {
-            console.error('❌ API Error Details:', apiResult);
-            console.error('❌ API Error Message:', apiResult.error);
-            console.error('❌ API Error Type:', typeof apiResult.error);
+            console.error('API Error:', apiResult);
             throw new Error('API returned error: ' + (apiResult.error || 'Unknown error'));
         }
 
@@ -269,27 +264,11 @@ async function analyzeSentiment() {
 
     } catch (error) {
         console.error('Analysis failed:', error);
-
-        const isServiceUnavailable = error.message.includes('temporarily unavailable') || error.message.includes('taking longer than expected');
-        const isTimeout = error.message.includes('taking longer than expected');
-
         document.getElementById('analysisResults').innerHTML = `
-            <div class="bg-${isServiceUnavailable ? 'blue' : 'red'}-900 border border-${isServiceUnavailable ? 'blue' : 'red'}-700 rounded-lg p-4">
-                <h4 class="font-semibold text-${isServiceUnavailable ? 'blue' : 'red'}-300 mb-2">
-                    ${isTimeout ? '⏱️ Complex Analysis in Progress' : isServiceUnavailable ? '⏳ AI Service Busy' : '❌ Analysis Failed'}
-                </h4>
-                <p class="text-${isServiceUnavailable ? 'blue' : 'red'}-200 mb-3">${error.message}</p>
-                ${isServiceUnavailable ? `
-                    <div class="bg-${isTimeout ? 'blue' : 'yellow'}-800 rounded p-3 mt-3">
-                        <p class="text-${isTimeout ? 'blue' : 'yellow'}-100 text-sm mb-2">
-                            <strong>${isTimeout ? 'Complex Healthcare Analysis:' : 'Why this happens:'}</strong>
-                            ${isTimeout ? 'Your text requires comprehensive emotional and clinical analysis. This takes time to ensure accuracy.' : 'Our Claude AI provides real healthcare analysis, not mock data. During high demand, processing may take longer to ensure accuracy.'}
-                        </p>
-                        <button onclick="analyzeSentiment()" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-white text-sm">
-                            ${isTimeout ? 'Retry Analysis' : 'Try Again'}
-                        </button>
-                    </div>
-                ` : ''}
+            <div class="text-red-400 text-center py-8">
+                <i class="fas fa-exclamation-triangle text-4xl mb-4"></i>
+                <p>Analysis failed: ${error.message}</p>
+                <p class="text-sm text-gray-400 mt-2">Check console for details</p>
             </div>
         `;
     } finally {
@@ -334,28 +313,10 @@ function convertApiResultToDisplayFormat(apiResult) {
             communication_quality: apiResult.relationshipContext.communication_quality,
             indicators: apiResult.relationshipContext.indicators || []
         } : null,
-        contextDetection: apiResult.contextDetection || null,
-        veteranContext: (apiResult.veteranContext && apiResult.veteranContext.applicable) ? {
-            applicable: apiResult.veteranContext.applicable,
-            military_indicators: apiResult.veteranContext.military_indicators || [],
-            transition_challenges: apiResult.veteranContext.transition_challenges || [],
-            time_since_separation: apiResult.veteranContext.time_since_separation,
-            identity_displacement: apiResult.veteranContext.identity_displacement || [],
-            civilian_integration: apiResult.veteranContext.civilian_integration || [],
-            employment_status: apiResult.veteranContext.employment_status,
-            substance_use_risk: apiResult.veteranContext.substance_use_risk || {},
-            ptsd_markers: apiResult.veteranContext.ptsd_markers || [],
-            standardized_indicators: apiResult.veteranContext.standardized_indicators || {},
-            recommended_resources: apiResult.veteranContext.recommended_resources || []
-        } : null,
         crisisAssessment: apiResult.crisisAssessment ? {
             risk_level: apiResult.crisisAssessment.risk_level,
-            immediate_risk_factors: apiResult.crisisAssessment.immediate_risk_factors || [],
-            protective_factors: apiResult.crisisAssessment.protective_factors || [],
-            intervention_timeline: apiResult.crisisAssessment.intervention_timeline,
-            monitoring_indicators: apiResult.crisisAssessment.monitoring_indicators || [],
             recommended_action: apiResult.crisisAssessment.recommended_action,
-            prioritized_resources: apiResult.crisisAssessment.prioritized_resources || {}
+            indicators: apiResult.crisisAssessment.indicators || []
         } : null,
         processingTime: apiResult.processingTime || 0,
         provider: apiResult.provider || 'claude-ai'
@@ -478,29 +439,6 @@ function displayAnalysisResults(results) {
     
     resultsContainer.innerHTML = `
         <div class="space-y-4">
-            <!-- Context Detection -->
-            ${results.contextDetection ? `
-            <div class="bg-gray-700 rounded-lg p-4 border-l-4 border-blue-500">
-                <h4 class="font-semibold mb-2 text-blue-300">🔍 Context Detection</h4>
-                <div class="space-y-2">
-                    <div class="flex justify-between">
-                        <span>Primary Context:</span>
-                        <span class="capitalize font-bold text-blue-400">${results.contextDetection.primary_context.replace('_', ' ')}</span>
-                    </div>
-                    ${results.contextDetection.detected_domains && results.contextDetection.detected_domains.length > 0 ? `
-                        <div class="flex justify-between">
-                            <span>Healthcare Domains:</span>
-                            <span class="text-sm text-blue-300">${results.contextDetection.detected_domains.join(', ')}</span>
-                        </div>
-                    ` : ''}
-                    <div class="flex justify-between">
-                        <span>Military Context:</span>
-                        <span class="font-bold ${results.contextDetection.has_military_indicators ? 'text-red-400' : 'text-green-400'}">${results.contextDetection.has_military_indicators ? 'Detected' : 'Not Detected'}</span>
-                    </div>
-                </div>
-            </div>
-            ` : ''}
-
             <!-- Sentiment Score -->
             <div class="bg-gray-700 rounded-lg p-4">
                 <h4 class="font-semibold mb-2">Sentiment Analysis</h4>
@@ -523,25 +461,7 @@ function displayAnalysisResults(results) {
             <div class="bg-gray-700 rounded-lg p-4">
                 <h4 class="font-semibold mb-2">Detected Emotions</h4>
                 <div class="space-y-2">
-                    ${results.emotions.primary ? `
-                        <div class="flex items-center justify-between">
-                            <span class="capitalize">primary:</span>
-                            <span class="text-sm">${results.emotions.emotional_intensity ? Math.round(results.emotions.emotional_intensity * 100) : 'N/A'}%</span>
-                        </div>
-                    ` : ''}
-                    ${results.emotions.secondary && results.emotions.secondary.length > 0 ? `
-                        <div class="flex items-center justify-between">
-                            <span class="capitalize">secondary:</span>
-                            <span class="text-sm">${results.emotions.emotional_intensity ? Math.round(results.emotions.emotional_intensity * 100) : 'N/A'}%</span>
-                        </div>
-                    ` : ''}
-                    ${results.emotions.emotional_intensity ? `
-                        <div class="flex items-center justify-between">
-                            <span class="capitalize">emotional_intensity:</span>
-                            <span class="text-sm">${Math.round(results.emotions.emotional_intensity * 100)}%</span>
-                        </div>
-                    ` : ''}
-                    ${results.emotions.detailed_emotions ? Object.entries(results.emotions.detailed_emotions).filter(([emotion, intensity]) => intensity !== null && intensity > 0).map(([emotion, intensity]) => `
+                    ${Object.entries(results.emotions).map(([emotion, intensity]) => `
                         <div class="flex items-center justify-between">
                             <span class="capitalize">${emotion}:</span>
                             <div class="flex items-center">
@@ -551,7 +471,7 @@ function displayAnalysisResults(results) {
                                 <span class="text-sm">${Math.round(intensity * 100)}%</span>
                             </div>
                         </div>
-                    `).join('') : ''}
+                    `).join('')}
                 </div>
             </div>
             ` : ''}
@@ -604,169 +524,23 @@ function displayAnalysisResults(results) {
             </div>
             ` : ''}
 
-            <!-- Veteran Context (Only if applicable) -->
-            ${results.veteranContext && results.veteranContext.applicable ? `
-            <div class="bg-gray-700 rounded-lg p-4 border-l-4 border-red-500">
-                <h4 class="font-semibold mb-2 text-red-300">🎖️ Veteran Context Analysis</h4>
-                <div class="space-y-2">
-                    ${results.veteranContext.time_since_separation ? `
-                        <div class="flex justify-between">
-                            <span>Time Since Separation:</span>
-                            <span class="font-bold text-orange-400">${results.veteranContext.time_since_separation}</span>
-                        </div>
-                    ` : ''}
-                    ${results.veteranContext.employment_status ? `
-                        <div class="flex justify-between">
-                            <span>Employment Status:</span>
-                            <span class="capitalize font-bold ${results.veteranContext.employment_status === 'stable' ? 'text-green-400' : 'text-red-400'}">${results.veteranContext.employment_status}</span>
-                        </div>
-                    ` : ''}
-                    ${results.veteranContext.substance_use_risk && results.veteranContext.substance_use_risk.level ? `
-                        <div class="flex justify-between">
-                            <span>Substance Use Risk:</span>
-                            <span class="capitalize font-bold ${results.veteranContext.substance_use_risk.level.includes('high') ? 'text-red-400' : 'text-yellow-400'}">${results.veteranContext.substance_use_risk.level}</span>
-                        </div>
-                    ` : ''}
-                    ${results.veteranContext.military_indicators && results.veteranContext.military_indicators.length > 0 ? `
-                        <div class="mt-2">
-                            <span class="text-sm text-gray-300">Military Indicators:</span>
-                            <ul class="text-sm mt-1 space-y-1">
-                                ${results.veteranContext.military_indicators.map(indicator => `
-                                    <li class="text-red-300">• ${indicator}</li>
-                                `).join('')}
-                            </ul>
-                        </div>
-                    ` : ''}
-                    ${results.veteranContext.identity_displacement && results.veteranContext.identity_displacement.length > 0 ? `
-                        <div class="mt-2">
-                            <span class="text-sm text-gray-300">Identity Displacement:</span>
-                            <ul class="text-sm mt-1 space-y-1">
-                                ${results.veteranContext.identity_displacement.map(indicator => `
-                                    <li class="text-purple-300">• ${indicator}</li>
-                                `).join('')}
-                            </ul>
-                        </div>
-                    ` : ''}
-                    ${results.veteranContext.ptsd_markers && results.veteranContext.ptsd_markers.length > 0 ? `
-                        <div class="mt-2">
-                            <span class="text-sm text-gray-300">PTSD Markers:</span>
-                            <ul class="text-sm mt-1 space-y-1">
-                                ${results.veteranContext.ptsd_markers.map(marker => `
-                                    <li class="text-yellow-300">• ${marker}</li>
-                                `).join('')}
-                            </ul>
-                        </div>
-                    ` : ''}
-                    ${results.veteranContext.standardized_indicators && Object.keys(results.veteranContext.standardized_indicators).length > 0 ? `
-                        <div class="mt-2 p-2 bg-indigo-900 rounded">
-                            <span class="text-sm font-semibold text-indigo-300">📊 Clinical Indicators:</span>
-                            ${results.veteranContext.standardized_indicators.pcl5_markers && results.veteranContext.standardized_indicators.pcl5_markers.length > 0 ? `
-                                <div class="mt-1">
-                                    <span class="text-xs text-indigo-200">PCL-5 Markers:</span>
-                                    <ul class="text-xs mt-1">
-                                        ${results.veteranContext.standardized_indicators.pcl5_markers.map(marker => `
-                                            <li class="text-indigo-100">• ${marker}</li>
-                                        `).join('')}
-                                    </ul>
-                                </div>
-                            ` : ''}
-                            ${results.veteranContext.standardized_indicators.audit_markers && results.veteranContext.standardized_indicators.audit_markers.length > 0 ? `
-                                <div class="mt-1">
-                                    <span class="text-xs text-indigo-200">AUDIT Markers:</span>
-                                    <ul class="text-xs mt-1">
-                                        ${results.veteranContext.standardized_indicators.audit_markers.map(marker => `
-                                            <li class="text-indigo-100">• ${marker}</li>
-                                        `).join('')}
-                                    </ul>
-                                </div>
-                            ` : ''}
-                        </div>
-                    ` : ''}
-                    ${results.veteranContext.recommended_resources && results.veteranContext.recommended_resources.length > 0 ? `
-                        <div class="mt-2 p-2 bg-blue-900 rounded">
-                            <span class="text-sm font-semibold text-blue-300">🏥 Recommended Resources:</span>
-                            <ul class="text-sm mt-1 space-y-1">
-                                ${results.veteranContext.recommended_resources.map(resource => `
-                                    <li class="text-blue-200">• ${resource}</li>
-                                `).join('')}
-                            </ul>
-                        </div>
-                    ` : ''}
-                </div>
-            </div>
-            ` : ''}
-
             <!-- Crisis Assessment -->
             ${results.crisisAssessment ? `
-            <div class="bg-gray-700 rounded-lg p-4 border-l-4 ${results.crisisAssessment.risk_level.includes('high') ? 'border-red-500' : results.crisisAssessment.risk_level.includes('medium') ? 'border-yellow-500' : 'border-green-500'}">
+            <div class="bg-gray-700 rounded-lg p-4">
                 <h4 class="font-semibold mb-2">Crisis Assessment</h4>
                 <div class="space-y-2">
                     <div class="flex justify-between">
                         <span>Risk Level:</span>
-                        <span class="capitalize font-bold ${results.crisisAssessment.risk_level.includes('high') ? 'text-red-400' : results.crisisAssessment.risk_level.includes('medium') ? 'text-yellow-400' : 'text-green-400'}">${results.crisisAssessment.risk_level}</span>
+                        <span class="capitalize font-bold ${results.crisisAssessment.risk_level === 'high' ? 'text-red-400' : results.crisisAssessment.risk_level === 'medium' ? 'text-yellow-400' : 'text-green-400'}">${results.crisisAssessment.risk_level}</span>
                     </div>
                     <div class="flex justify-between">
                         <span>Recommended Action:</span>
                         <span class="capitalize font-bold text-blue-400">${results.crisisAssessment.recommended_action.replace('_', ' ')}</span>
                     </div>
-                    ${results.crisisAssessment.intervention_timeline ? `
-                        <div class="flex justify-between">
-                            <span>Intervention Timeline:</span>
-                            <span class="capitalize font-bold text-purple-400">${results.crisisAssessment.intervention_timeline.replace('_', ' ')}</span>
-                        </div>
-                    ` : ''}
-                    ${results.crisisAssessment.immediate_risk_factors && results.crisisAssessment.immediate_risk_factors.length > 0 ? `
-                        <div class="mt-2 p-2 bg-red-900 rounded">
-                            <span class="text-sm font-semibold text-red-400">🚨 Immediate Risk Factors</span>
-                            <ul class="text-sm mt-1 space-y-1">
-                                ${results.crisisAssessment.immediate_risk_factors.map(factor => `
-                                    <li class="text-red-300">• ${factor}</li>
-                                `).join('')}
-                            </ul>
-                        </div>
-                    ` : ''}
-                    ${results.crisisAssessment.protective_factors && results.crisisAssessment.protective_factors.length > 0 ? `
-                        <div class="mt-2 p-2 bg-green-900 rounded">
-                            <span class="text-sm font-semibold text-green-400">✅ Protective Factors</span>
-                            <ul class="text-sm mt-1 space-y-1">
-                                ${results.crisisAssessment.protective_factors.map(factor => `
-                                    <li class="text-green-300">• ${factor}</li>
-                                `).join('')}
-                            </ul>
-                        </div>
-                    ` : ''}
-                    ${results.crisisAssessment.prioritized_resources && Object.keys(results.crisisAssessment.prioritized_resources).length > 0 ? `
-                        <div class="mt-2 space-y-2">
-                            ${results.crisisAssessment.prioritized_resources.immediate && results.crisisAssessment.prioritized_resources.immediate.length > 0 ? `
-                                <div class="p-2 bg-red-800 rounded">
-                                    <span class="text-sm font-semibold text-red-200">🆘 Immediate (0-24h)</span>
-                                    <ul class="text-xs mt-1 space-y-1">
-                                        ${results.crisisAssessment.prioritized_resources.immediate.map(resource => `
-                                            <li class="text-red-100">• ${resource}</li>
-                                        `).join('')}
-                                    </ul>
-                                </div>
-                            ` : ''}
-                            ${results.crisisAssessment.prioritized_resources.short_term && results.crisisAssessment.prioritized_resources.short_term.length > 0 ? `
-                                <div class="p-2 bg-yellow-800 rounded">
-                                    <span class="text-sm font-semibold text-yellow-200">⏰ Short-term (1-7 days)</span>
-                                    <ul class="text-xs mt-1 space-y-1">
-                                        ${results.crisisAssessment.prioritized_resources.short_term.map(resource => `
-                                            <li class="text-yellow-100">• ${resource}</li>
-                                        `).join('')}
-                                    </ul>
-                                </div>
-                            ` : ''}
-                            ${results.crisisAssessment.prioritized_resources.ongoing && results.crisisAssessment.prioritized_resources.ongoing.length > 0 ? `
-                                <div class="p-2 bg-blue-800 rounded">
-                                    <span class="text-sm font-semibold text-blue-200">🔄 Ongoing Support</span>
-                                    <ul class="text-xs mt-1 space-y-1">
-                                        ${results.crisisAssessment.prioritized_resources.ongoing.map(resource => `
-                                            <li class="text-blue-100">• ${resource}</li>
-                                        `).join('')}
-                                    </ul>
-                                </div>
-                            ` : ''}
+                    ${results.crisisAssessment.indicators.length > 0 ? `
+                        <div class="mt-2 p-2 bg-yellow-900 rounded">
+                            <span class="text-sm font-semibold text-yellow-400">⚠️ Attention Required</span>
+                            <p class="text-sm text-yellow-300 mt-1">${results.crisisAssessment.indicators.join(', ')}</p>
                         </div>
                     ` : ''}
                 </div>
@@ -827,5 +601,20 @@ function getRandomColor() {
     return colors[Math.floor(Math.random() * colors.length)];
 }
 
-// No mock data initialization - VCs will use real examples
-// All analysis is now performed with real Claude AI only
+// Initialize demo data
+function initializeDemoData() {
+    // Pre-fill the sentiment input with example text
+    const exampleTexts = [
+        "I'm feeling much better after starting the new treatment. My partner has been so supportive through this journey, and I can see real progress in managing my symptoms.",
+        "The medication side effects are challenging, but my healthcare team is helping me adjust. Having someone who understands what I'm going through makes such a difference.",
+        "Some days are harder than others, but I'm learning to communicate my needs better. The treatment plan is working, and I feel more hopeful about the future."
+    ];
+    
+    const input = document.getElementById('sentimentInput');
+    if (input && !input.value) {
+        input.value = exampleTexts[Math.floor(Math.random() * exampleTexts.length)];
+    }
+}
+
+// Call initialization after a short delay
+setTimeout(initializeDemoData, 1000);

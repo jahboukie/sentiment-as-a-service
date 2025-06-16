@@ -1,5 +1,5 @@
 // Vercel API Route for Sentiment Analysis
-// This proxies requests to our Claude AI analysis
+// Enhanced with comprehensive emotion detection and detailed crisis assessment
 
 const axios = require('axios');
 
@@ -71,71 +71,109 @@ export default async function handler(req, res) {
   }
 }
 
-// Claude AI Analysis Function (copied from start-demo.js)
+// Enhanced Claude AI Analysis Function with Complete Emotion Detection
 async function analyzeWithClaudeAI(text, apiKey) {
   const startTime = Date.now();
 
-  const prompt = `Analyze this healthcare text quickly and accurately:
+  const prompt = `Analyze this healthcare text comprehensively and provide detailed clinical insights:
 
 "${text}"
 
-Provide JSON response with:
-- Context detection (primary_context, has_military_indicators)
-- Sentiment score (-1 to 1), category, confidence
-- Key emotions with scores (0-1): isolation, hopelessness, anxiety, frustration, sadness, love, fear, hope
-- Healthcare indicators and trend
-- Relationship health and support level
-- Crisis risk and recommended action
-- Veteran context (only if military terms present)
-- Brief recommendations
+Perform complete sentiment and emotional analysis with context detection. Provide JSON response with:
+
+CONTEXT DETECTION:
+- Identify primary context from: veteran_transition, menopause, chronic_illness, pregnancy, relationship_issues, mental_health, substance_use, general_health
+- Detect specific indicators for military, healthcare, relationship contexts
+
+COMPREHENSIVE EMOTION ANALYSIS:
+Analyze ALL emotions present in the text with intensity scores (0-1) and confidence (0-1). Include:
+- Core emotions: isolation, hopelessness, anxiety, fear, sadness, anger
+- Complex emotions: frustration, grief, shame, guilt, confusion, overwhelm
+- Positive emotions: hope, love, gratitude, relief, determination, peace
+- Social emotions: longing, nostalgia, rejection, belonging, trust
+- Only include emotions that are actually detected in the text
+
+DETAILED CRISIS ASSESSMENT:
+- Risk level assessment with specific risk factors
+- Protective factors identification
+- Intervention timeline recommendations
+- Specific resource recommendations based on context
+
+CONTEXT-SPECIFIC ANALYSIS:
+- For veteran contexts: PTSD markers, employment status, military transition indicators
+- For relationship contexts: communication patterns, relationship health
+- For healthcare contexts: treatment sentiment, symptom management
 
 JSON format:
 {
   "context_detection": {
-    "primary_context": "<menopause|mental_health|chronic_illness|veteran_transition|relationship_issues>",
-    "has_military_indicators": <true|false>
+    "primary_context": "<detected_context>",
+    "healthcare_domains": ["<relevant_domains>"],
+    "military_context": "<detected|not_detected>",
+    "confidence": <0-1>
   },
-  "sentiment_score": <-1 to 1>,
-  "sentiment_category": "<positive|negative|neutral|mixed>",
-  "confidence": <0 to 1>,
+  "sentiment": {
+    "score": <-1 to 1>,
+    "category": "<positive|negative|neutral|mixed>",
+    "confidence": <0-1>
+  },
   "emotions": {
-    "primary": "<emotion>",
-    "detailed_emotions": {
-      "isolation": <0-1 or null>,
-      "hopelessness": <0-1 or null>,
-      "anxiety": <0-1 or null>,
-      "frustration": <0-1 or null>,
-      "sadness": <0-1 or null>,
-      "love": <0-1 or null>,
-      "fear": <0-1 or null>,
-      "hope": <0-1 or null>
+    "detected_emotions": {
+      "isolation": {"intensity": <0-1>, "confidence": <0-1>},
+      "hopelessness": {"intensity": <0-1>, "confidence": <0-1>},
+      "anxiety": {"intensity": <0-1>, "confidence": <0-1>},
+      "frustration": {"intensity": <0-1>, "confidence": <0-1>},
+      "sadness": {"intensity": <0-1>, "confidence": <0-1>},
+      "grief": {"intensity": <0-1>, "confidence": <0-1>},
+      "shame": {"intensity": <0-1>, "confidence": <0-1>},
+      "anger": {"intensity": <0-1>, "confidence": <0-1>},
+      "fear": {"intensity": <0-1>, "confidence": <0-1>},
+      "love": {"intensity": <0-1>, "confidence": <0-1>},
+      "hope": {"intensity": <0-1>, "confidence": <0-1>},
+      "relief": {"intensity": <0-1>, "confidence": <0-1>},
+      "confusion": {"intensity": <0-1>, "confidence": <0-1>},
+      "nostalgia": {"intensity": <0-1>, "confidence": <0-1>},
+      "determination": {"intensity": <0-1>, "confidence": <0-1>},
+      "longing": {"intensity": <0-1>, "confidence": <0-1>}
     }
   },
   "healthcare_context": {
-    "health_status_trend": "<improving|stable|declining>",
-    "treatment_sentiment": "<positive|negative|neutral>"
+    "health_trend": "<improving|stable|declining>",
+    "treatment_sentiment": "<positive|negative|neutral>",
+    "indicators": ["<specific_health_indicators>"]
   },
   "relationship_context": {
     "relationship_health": "<healthy|strained|supportive>",
-    "support_level": "<high|medium|low>"
+    "support_level": "<high|medium|low>",
+    "communication": "<good|poor|improving|declining>"
   },
   "veteran_context": {
-    "applicable": <true if military terms detected, false otherwise>,
+    "applicable": <true|false>,
     "employment_status": "<stable|unstable|unknown>",
-    "ptsd_markers": ["<symptoms if detected>"]
+    "ptsd_markers": ["<specific_symptoms>"],
+    "military_indicators": ["<military_terms_detected>"]
   },
   "crisis_assessment": {
-    "risk_level": "<low|medium|high>",
-    "recommended_action": "<monitoring|professional_support|emergency>",
-    "resources": ["<key resources>"]
+    "risk_level": "<low|medium|medium-high|high>",
+    "recommended_action": "<monitoring|professional_support|immediate_intervention>",
+    "intervention_timeline": "<ongoing_monitoring|within_week|within_24h|immediate>",
+    "immediate_risk_factors": ["<specific_risk_factors>"],
+    "protective_factors": ["<specific_protective_factors>"]
   },
-  "recommendations": ["<brief actionable recommendations>"]
-}`;
+  "resources": {
+    "immediate": ["<0-24h_resources>"],
+    "short_term": ["<1-7_days_resources>"],
+    "ongoing": ["<long_term_resources>"]
+  },
+  "recommendations": ["<specific_actionable_recommendations>"]
+}
+
+Important: Only include emotions that are actually detected in the text. Use null or omit emotions not present. Provide specific, context-appropriate resources.`;
 
   try {
     const response = await axios.post('https://api.anthropic.com/v1/messages', {
       model: 'claude-3-5-sonnet-20241022',
-      max_tokens: 700,
+      max_tokens: 1500, // Increased for comprehensive analysis
       messages: [
         {
           role: 'user',
@@ -148,7 +186,7 @@ JSON format:
         'x-api-key': apiKey,
         'anthropic-version': '2023-06-01'
       },
-      timeout: 8000
+      timeout: 10000 // Increased timeout for comprehensive analysis
     });
 
     const content = response.data.content[0].text;
@@ -163,23 +201,64 @@ JSON format:
       throw new Error('Invalid JSON response from Claude AI');
     }
 
+    // Format response to match frontend expectations
     return {
       success: true,
       result: {
-        contextDetection: analysis.context_detection,
-        sentiment: {
-          score: analysis.sentiment_score,
-          category: analysis.sentiment_category,
-          confidence: analysis.confidence
+        contextDetection: {
+          primaryContext: analysis.context_detection.primary_context,
+          healthcareDomains: analysis.context_detection.healthcare_domains,
+          militaryContext: analysis.context_detection.military_context,
+          confidence: analysis.context_detection.confidence
         },
-        emotions: analysis.emotions,
-        healthcareContext: analysis.healthcare_context,
-        relationshipContext: analysis.relationship_context,
-        veteranContext: analysis.veteran_context,
-        crisisAssessment: analysis.crisis_assessment,
-        insights: { recommendations: analysis.recommendations },
+        sentiment: {
+          score: analysis.sentiment.score,
+          category: analysis.sentiment.category,
+          confidence: analysis.sentiment.confidence
+        },
+        emotions: {
+          detectedEmotions: analysis.emotions.detected_emotions,
+          // Backward compatibility - flatten for frontend display
+          ...Object.fromEntries(
+            Object.entries(analysis.emotions.detected_emotions || {}).map(([emotion, data]) => [
+              emotion, 
+              data?.intensity || data // Support both old and new formats
+            ])
+          )
+        },
+        healthcareContext: {
+          healthTrend: analysis.healthcare_context.health_trend,
+          treatmentSentiment: analysis.healthcare_context.treatment_sentiment,
+          indicators: analysis.healthcare_context.indicators
+        },
+        relationshipContext: {
+          relationshipHealth: analysis.relationship_context.relationship_health,
+          supportLevel: analysis.relationship_context.support_level,
+          communication: analysis.relationship_context.communication
+        },
+        veteranContext: {
+          applicable: analysis.veteran_context.applicable,
+          employmentStatus: analysis.veteran_context.employment_status,
+          ptsdMarkers: analysis.veteran_context.ptsd_markers,
+          militaryIndicators: analysis.veteran_context.military_indicators
+        },
+        crisisAssessment: {
+          riskLevel: analysis.crisis_assessment.risk_level,
+          recommendedAction: analysis.crisis_assessment.recommended_action,
+          interventionTimeline: analysis.crisis_assessment.intervention_timeline,
+          immediateRiskFactors: analysis.crisis_assessment.immediate_risk_factors,
+          protectiveFactors: analysis.crisis_assessment.protective_factors
+        },
+        resources: {
+          immediate: analysis.resources.immediate,
+          shortTerm: analysis.resources.short_term,
+          ongoing: analysis.resources.ongoing
+        },
+        insights: { 
+          recommendations: analysis.recommendations 
+        },
         processingTime: Date.now() - startTime,
-        provider: 'claude-ai-vercel'
+        provider: 'claude-ai-enhanced'
       }
     };
 
@@ -188,7 +267,7 @@ JSON format:
     console.error('Claude AI API error:', error.response?.data || error.message);
     console.error('Processing time before error:', processingTime + 'ms');
     
-    if (error.code === 'ECONNABORTED' || processingTime > 8000) {
+    if (error.code === 'ECONNABORTED' || processingTime > 10000) {
       throw new Error('PROCESSING_TIMEOUT: Analysis took too long');
     } else if (error.response?.status === 503) {
       throw new Error('MODEL_UNAVAILABLE: AI service temporarily unavailable');
