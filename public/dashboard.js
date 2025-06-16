@@ -313,7 +313,8 @@ function convertApiResultToDisplayFormat(apiResult) {
         },
         crisisAssessment: {
             risk_level: apiResult.crisisAssessment?.risk_level || 'low',
-            recommended_action: apiResult.crisisAssessment?.recommended_action || 'monitoring'
+            recommended_action: apiResult.crisisAssessment?.recommended_action || 'monitoring',
+            indicators: apiResult.crisisAssessment?.indicators || []
         },
         processingTime: apiResult.processingTime || 0,
         provider: 'Dr. Alex AI - Menopause Specialist'
@@ -590,10 +591,10 @@ function displayAnalysisResults(results) {
                         <span>Recommended Action:</span>
                         <span class="capitalize font-bold text-blue-400">${results.crisisAssessment.recommended_action.replace('_', ' ')}</span>
                     </div>
-                    ${results.crisisAssessment.indicators.length > 0 ? `
+                    ${(results.crisisAssessment.indicators || []).length > 0 ? `
                         <div class="mt-2 p-2 bg-yellow-900 rounded">
                             <span class="text-sm font-semibold text-yellow-400">⚠️ Attention Required</span>
-                            <p class="text-sm text-yellow-300 mt-1">${results.crisisAssessment.indicators.join(', ')}</p>
+                            <p class="text-sm text-yellow-300 mt-1">${(results.crisisAssessment.indicators || []).join(', ')}</p>
                         </div>
                     ` : ''}
                 </div>
