@@ -677,9 +677,12 @@ function initializeDemoData() {
 
 // Helper functions for menopause-specific analysis
 function getMenopauseSymptomStatus(results) {
-    if (results.emotions.hope > 0.6 && results.healthcareContext.health_trend === 'improving') {
+    const emotions = results.emotions || {};
+    const healthcareContext = results.healthcareContext || {};
+
+    if ((emotions.hope || 0) > 0.6 && healthcareContext.health_trend === 'improving') {
         return 'Well Controlled';
-    } else if (results.emotions.frustration > 0.5) {
+    } else if ((emotions.frustration || 0) > 0.5) {
         return 'Optimizing Treatment';
     } else {
         return 'Stable Progress';
@@ -688,14 +691,16 @@ function getMenopauseSymptomStatus(results) {
 
 function generateMenopauseRecommendations(results) {
     const recommendations = [];
+    const emotions = results.emotions || {};
+    const relationshipContext = results.relationshipContext || {};
 
-    if (results.emotions.hope > 0.6) {
+    if ((emotions.hope || 0) > 0.6) {
         recommendations.push('Continue current hormone therapy - showing excellent response');
     }
-    if (results.emotions.frustration > 0.4) {
+    if ((emotions.frustration || 0) > 0.4) {
         recommendations.push('Consider symptom tracking to optimize treatment timing');
     }
-    if (results.relationshipContext.support_level !== 'high') {
+    if (relationshipContext.support_level !== 'high') {
         recommendations.push('Partner education resources may enhance support quality');
     }
 
@@ -707,14 +712,16 @@ function generateMenopauseRecommendations(results) {
 
 function generatePartnerSupportRecommendations(results) {
     const recommendations = [];
+    const emotions = results.emotions || {};
+    const relationshipContext = results.relationshipContext || {};
 
-    if (results.emotions.love > 0.3) {
+    if ((emotions.love || 0) > 0.3) {
         recommendations.push('Strong relationship foundation - focus on communication during transition');
     }
-    if (results.relationshipContext.relationship_health === 'strained') {
+    if (relationshipContext.relationship_health === 'strained') {
         recommendations.push('Couples communication strategies for menopause transition');
     }
-    if (results.emotions.frustration > 0.4) {
+    if ((emotions.frustration || 0) > 0.4) {
         recommendations.push('Partner menopause education to improve understanding');
     }
 
@@ -734,9 +741,11 @@ function getMenopauseCareLevel(riskLevel) {
 }
 
 function generateDrAlexInsight(results) {
-    if (results.emotions.hope > 0.6) {
+    const emotions = results.emotions || {};
+
+    if ((emotions.hope || 0) > 0.6) {
         return "Excellent treatment trajectory observed. The combination of positive treatment response and strong emotional resilience suggests optimal menopause management. Continue current approach with regular monitoring.";
-    } else if (results.emotions.frustration > 0.5) {
+    } else if ((emotions.frustration || 0) > 0.5) {
         return "Treatment optimization opportunity identified. Consider collaborative approach with healthcare provider to fine-tune hormone therapy and explore additional symptom management strategies.";
     } else {
         return "Stable menopause transition progress. The balanced emotional profile suggests good adaptation to treatment. Maintain current care plan with focus on partner support integration.";
