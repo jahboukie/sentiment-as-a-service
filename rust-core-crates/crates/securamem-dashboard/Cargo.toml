@@ -1,0 +1,48 @@
+[package]
+name = "securamem-dashboard"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+
+[dependencies]
+# Workspace dependencies
+securamem-core = { path = "../securamem-core" }
+securamem-storage = { path = "../securamem-storage" }
+securamem-crypto = { path = "../securamem-crypto" }
+
+# Tauri 2.0
+tauri = { version = "2", features = ["devtools"] }
+
+# Serialization for IPC
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+# Async runtime
+tokio = { workspace = true }
+
+# Date/time handling
+chrono = { workspace = true }
+
+# Error handling
+thiserror = { workspace = true }
+anyhow = { workspace = true }
+
+# Logging
+tracing = { workspace = true }
+
+# Random for demo data
+rand = "0.8"
+
+# UUID generation
+uuid = { version = "1", features = ["v4"] }
+
+# SQLx for golden demo database (same as securamem-storage)
+sqlx = { version = "0.7", features = ["runtime-tokio", "sqlite"] }
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[features]
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]

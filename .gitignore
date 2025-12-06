@@ -4,6 +4,15 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Rust
+rust-sidecar/target/
+rust-sidecar/.rg-check/
+rust-sidecar/audit_logs/
+rust-core-crates/target/
+*.pdb
+*.exe
+!rust-sidecar/README.md
+
 # Environment variables
 .env
 .env.local
@@ -139,3 +148,8 @@ secrets/
 .secrets
 api-keys/
 .vercel
+
+# SecuraMem
+.securamem/
+
+.antigoldfishmode/

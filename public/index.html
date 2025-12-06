@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SentimentAsAService - Enterprise Healthcare Intelligence Platform</title>
-    <meta name="description" content="Military-grade sentiment analysis platform powered by Claude AI for healthcare ecosystems">
+    <title>SentimentAsAService - RG Check Compliance Engine for iGaming</title>
+    <meta name="description" content="Automated responsible gambling compliance powered by Rust. AGCO Standard 2.10 harm detection for Ontario iGaming operators.">
     
     <!-- Tailwind CSS - Production Build -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
@@ -53,15 +53,15 @@
                 </div>
                 <div class="flex items-center space-x-4">
                     <div class="security-badge px-3 py-1 rounded-full text-xs">
-                        <i class="fas fa-shield-alt mr-1"></i>
-                        Military-Grade Security
+                        <i class="fas fa-certificate mr-1"></i>
+                        RG Check Ready
                     </div>
                     <div class="claude-badge px-3 py-1 rounded-full text-xs">
-                        <i class="fas fa-robot mr-1"></i>
-                        Powered by Claude AI
+                        <i class="fas fa-cog mr-1"></i>
+                        Powered by Rust
                     </div>
                     <button class="bg-white text-gray-900 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition">
-                        Enterprise Login
+                        Operator Login
                     </button>
                 </div>
             </div>
@@ -70,80 +70,93 @@
 
     <!-- Hero Section -->
     <section class="relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 opacity-50"></div>
+        <div class="absolute inset-0 bg-gradient-to-br from-green-900 via-blue-900 to-indigo-900 opacity-50"></div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
             <div class="text-center">
+                <div class="inline-block mb-4 px-4 py-2 bg-green-800 border border-green-600 rounded-full text-green-300 text-sm font-semibold">
+                    <i class="fas fa-certificate mr-2"></i>
+                    RG Check Accreditation Ready
+                </div>
                 <h1 class="text-5xl md:text-6xl font-extrabold mb-6">
-                    Healthcare Intelligence
-                    <span class="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
-                        Powered by Claude AI
+                    Responsible Gambling
+                    <span class="block text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500">
+                        Compliance Engine
                     </span>
                 </h1>
                 <p class="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
-                    Military-grade sentiment analysis platform providing real-time relationship insights, 
-                    clinical decision support, and predictive analytics for healthcare ecosystems.
+                    Automated harm detection system for Ontario iGaming operators. 
+                    Meet AGCO Standard 2.10 requirements with real-time behavioral + emotional risk fusion.
                 </p>
-                <!-- Investor Pitch Deck CTA -->
-                <div class="mb-8">
-                    <a href="/pitch" class="inline-block bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black px-12 py-4 rounded-lg font-bold text-xl transition shadow-2xl transform hover:scale-105">
-                        <i class="fas fa-presentation mr-3"></i>
-                        🚀 VIEW INVESTOR PITCH DECK 🚀
-                    </a>
-                    <p class="text-sm text-gray-300 mt-2">Complete VC presentation with VetSupport, market analysis & revenue projections</p>
+                <!-- Value Proposition -->
+                <div class="mb-8 max-w-2xl mx-auto">
+                    <div class="grid grid-cols-3 gap-4 text-center">
+                        <div class="bg-gray-800 bg-opacity-50 rounded-lg p-4">
+                            <div class="text-2xl font-bold text-green-400">iGO</div>
+                            <div class="text-xs text-gray-400">Ontario Compliant</div>
+                        </div>
+                        <div class="bg-gray-800 bg-opacity-50 rounded-lg p-4">
+                            <div class="text-2xl font-bold text-blue-400">&lt;1ms</div>
+                            <div class="text-xs text-gray-400">Risk Detection</div>
+                        </div>
+                        <div class="bg-gray-800 bg-opacity-50 rounded-lg p-4">
+                            <div class="text-2xl font-bold text-purple-400">Rust</div>
+                            <div class="text-xs text-gray-400">High Performance</div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <button onclick="showApiDemo()" class="bg-blue-600 hover:bg-blue-700 px-8 py-3 rounded-lg font-semibold transition shadow-glow">
-                        <i class="fas fa-play mr-2"></i>
-                        Live API Demo
-                    </button>
-                    <button onclick="showDashboard()" class="bg-purple-600 hover:bg-purple-700 px-8 py-3 rounded-lg font-semibold transition">
-                        <i class="fas fa-chart-line mr-2"></i>
-                        View Analytics
-                    </button>
-                    <a href="https://demo.womenhealth.health/" target="_blank" rel="noopener noreferrer" class="security-badge px-8 py-3 rounded-lg font-semibold transition inline-block text-center">
-                        <i class="fas fa-lock mr-2"></i>
-                        Security Demo
+                    <a href="#rgCheck" class="bg-green-600 hover:bg-green-700 px-8 py-3 rounded-lg font-semibold transition shadow-glow">
+                        <i class="fas fa-shield-alt mr-2"></i>
+                        See Compliance Features
                     </a>
+                    <a href="/api-explorer.html" class="bg-blue-600 hover:bg-blue-700 px-8 py-3 rounded-lg font-semibold transition inline-block text-center">
+                        <i class="fas fa-code mr-2"></i>
+                        API Documentation
+                    </a>
+                    <button onclick="showDashboard()" class="bg-gray-600 hover:bg-gray-700 px-8 py-3 rounded-lg font-semibold transition">
+                        <i class="fas fa-chart-line mr-2"></i>
+                        Integration Demo
+                    </button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Real-time Stats -->
+    <!-- RG Check Stats -->
     <section class="py-12 bg-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <div class="bg-gray-700 rounded-lg p-6 text-center">
-                    <div class="text-3xl font-bold text-blue-400 mb-2" id="analysesCount">1,247,893</div>
-                    <div class="text-gray-300">Sentiment Analyses</div>
+                    <div class="text-3xl font-bold text-green-400 mb-2">RGC</div>
+                    <div class="text-gray-300">Accreditation Ready</div>
                     <div class="text-sm text-green-400 mt-1">
-                        <i class="fas fa-arrow-up mr-1"></i>
-                        +12.3% today
+                        <i class="fas fa-certificate mr-1"></i>
+                        RG Check Standards
                     </div>
                 </div>
                 <div class="bg-gray-700 rounded-lg p-6 text-center">
-                    <div class="text-3xl font-bold text-purple-400 mb-2">847</div>
-                    <div class="text-gray-300">Enterprise Clients</div>
-                    <div class="text-sm text-green-400 mt-1">
-                        <i class="fas fa-arrow-up mr-1"></i>
-                        +5.7% this month
-                    </div>
-                </div>
-                <div class="bg-gray-700 rounded-lg p-6 text-center">
-                    <div class="text-3xl font-bold text-green-400 mb-2">99.97%</div>
-                    <div class="text-gray-300">Uptime</div>
+                    <div class="text-3xl font-bold text-blue-400 mb-2">&lt;1ms</div>
+                    <div class="text-gray-300">Risk Fusion</div>
                     <div class="text-sm text-blue-400 mt-1">
-                        <i class="fas fa-shield-alt mr-1"></i>
-                        Military-grade reliability
+                        <i class="fas fa-bolt mr-1"></i>
+                        Rust Performance
                     </div>
                 </div>
                 <div class="bg-gray-700 rounded-lg p-6 text-center">
-                    <div class="text-3xl font-bold text-red-400 mb-2">0</div>
-                    <div class="text-gray-300">Security Breaches</div>
-                    <div class="text-sm text-green-400 mt-1">
-                        <i class="fas fa-lock mr-1"></i>
-                        Zero-knowledge architecture
+                    <div class="text-3xl font-bold text-purple-400 mb-2">2</div>
+                    <div class="text-gray-300">Data Streams</div>
+                    <div class="text-sm text-purple-400 mt-1">
+                        <i class="fas fa-stream mr-1"></i>
+                        Behavioral + Emotional
+                    </div>
+                </div>
+                <div class="bg-gray-700 rounded-lg p-6 text-center">
+                    <div class="text-3xl font-bold text-red-400 mb-2">24/7</div>
+                    <div class="text-gray-300">Harm Detection</div>
+                    <div class="text-sm text-red-400 mt-1">
+                        <i class="fas fa-exclamation-triangle mr-1"></i>
+                        Real-time intervention
                     </div>
                 </div>
             </div>
@@ -152,108 +165,90 @@
 
     <!-- Main Dashboard Container -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <!-- API Demo Section -->
-        <section id="apiDemo" class="mb-12 hidden">
+        
+        <!-- RG Check Compliance Section -->
+        <section id="rgCheck" class="mb-12">
             <h2 class="text-3xl font-bold mb-6">
-                <i class="fas fa-code mr-3 text-blue-400"></i>
-                Live API Demonstration
+                <i class="fas fa-shield-alt mr-3 text-green-400"></i>
+                RG Check Compliance Engine
             </h2>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <p class="text-gray-300 mb-8 text-lg">
+                Automated harm detection system designed for <strong>AGCO Registrar's Standards 2.10</strong> compliance. 
+                Turn responsible gambling from a cost center into profit protection infrastructure.
+            </p>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <!-- Risk Fusion Architecture -->
                 <div class="bg-gray-800 rounded-lg p-6">
-                    <h3 class="text-xl font-semibold mb-4">Real-time Sentiment Analysis</h3>
-
-                    <!-- Menopause Example Texts for VC Demo -->
-                    <div class="mb-6 bg-gray-900 rounded-lg p-4">
-                        <h4 class="text-lg font-semibold mb-3 text-purple-300">🌸 Menopause Journey Examples</h4>
-                        <p class="text-sm text-gray-400 mb-4">Click any example below to copy, then paste into the analysis box:</p>
-
-                        <div class="grid grid-cols-1 gap-3">
-                            <!-- Early Perimenopause - Confusion & Discovery -->
-                            <div class="bg-purple-900 border border-purple-700 rounded p-3 cursor-pointer hover:bg-purple-800 transition" onclick="copyToClipboard(this.querySelector('.example-text').textContent, 'Early Perimenopause Example')">
-                                <div class="flex justify-between items-start mb-2">
-                                    <span class="text-purple-300 font-semibold text-sm">🌸 Early Perimenopause</span>
-                                    <span class="text-xs text-purple-400">Click to copy</span>
-                                </div>
-                                <div class="example-text text-sm text-purple-100">"I'm 45 and my periods have become so unpredictable. Some months I skip entirely, then I'll have two in one month. The brain fog is the worst part - I used to be so sharp at work, but now I forget simple things and feel like I'm losing my mind. My doctor says this is normal, but it doesn't feel normal to me."</div>
-                            </div>
-
-                            <!-- Hormone Therapy Success -->
-                            <div class="bg-green-900 border border-green-700 rounded p-3 cursor-pointer hover:bg-green-800 transition" onclick="copyToClipboard(this.querySelector('.example-text').textContent, 'Hormone Therapy Success Example')">
-                                <div class="flex justify-between items-start mb-2">
-                                    <span class="text-green-300 font-semibold text-sm">💚 Hormone Therapy Success</span>
-                                    <span class="text-xs text-green-400">Click to copy</span>
-                                </div>
-                                <div class="example-text text-sm text-green-100">"The new hormone therapy has been helping with my hot flashes and sleep issues, but I'm still struggling with mood swings that are affecting my relationship. My partner tries to be understanding, and I'm learning to communicate my needs better. The treatment plan is working, and I feel more hopeful about the future."</div>
-                            </div>
-
-                            <!-- Severe Symptoms & Relationship Impact -->
-                            <div class="bg-red-900 border border-red-700 rounded p-3 cursor-pointer hover:bg-red-800 transition" onclick="copyToClipboard(this.querySelector('.example-text').textContent, 'Severe Menopause Symptoms Example')">
-                                <div class="flex justify-between items-start mb-2">
-                                    <span class="text-red-300 font-semibold text-sm">🔥 Severe Symptoms</span>
-                                    <span class="text-xs text-red-400">Click to copy</span>
-                                </div>
-                                <div class="example-text text-sm text-red-100">"The hot flashes wake me up 6-7 times a night, and I'm drenched in sweat. My husband moved to the guest room because I keep the AC at 65 degrees. I feel like a stranger in my own body - irritable, exhausted, and completely overwhelmed. I snapped at my teenage daughter yesterday over nothing, and the guilt is eating me alive."</div>
-                            </div>
-
-                            <!-- Weight Gain & Body Image -->
-                            <div class="bg-orange-900 border border-orange-700 rounded p-3 cursor-pointer hover:bg-orange-800 transition" onclick="copyToClipboard(this.querySelector('.example-text').textContent, 'Menopause Weight Gain Example')">
-                                <div class="flex justify-between items-start mb-2">
-                                    <span class="text-orange-300 font-semibold text-sm">⚖️ Body Changes</span>
-                                    <span class="text-xs text-orange-400">Click to copy</span>
-                                </div>
-                                <div class="example-text text-sm text-orange-100">"I've gained 20 pounds in the past year despite eating the same way I always have. My clothes don't fit, and I feel uncomfortable in my own skin. The weight seems to settle around my middle no matter what I do. I've tried every diet, but nothing works like it used to. I feel invisible and unattractive."</div>
-                            </div>
-
-                            <!-- Post-Menopause Empowerment -->
-                            <div class="bg-blue-900 border border-blue-700 rounded p-3 cursor-pointer hover:bg-blue-800 transition" onclick="copyToClipboard(this.querySelector('.example-text').textContent, 'Post-Menopause Empowerment Example')">
-                                <div class="flex justify-between items-start mb-2">
-                                    <span class="text-blue-300 font-semibold text-sm">🦋 Post-Menopause Freedom</span>
-                                    <span class="text-xs text-blue-400">Click to copy</span>
-                                </div>
-                                <div class="example-text text-sm text-blue-100">"It's been two years since my last period, and I finally feel like myself again. The hot flashes have mostly stopped, my energy is returning, and I'm sleeping through the night. I feel liberated from the monthly cycle and more confident than I've been in years. This new chapter feels full of possibilities."</div>
-                            </div>
+                    <h3 class="text-xl font-semibold mb-4 text-blue-400">
+                        <i class="fas fa-project-diagram mr-2"></i>
+                        Risk Fusion Architecture
+                    </h3>
+                    <p class="text-gray-400 mb-4">Real-time correlation of behavioral and emotional data streams:</p>
+                    <div class="space-y-3">
+                        <div class="p-3 bg-blue-900 rounded-lg border-l-4 border-blue-500">
+                            <div class="font-semibold text-blue-300">Stream A: Transactional Data</div>
+                            <div class="text-sm text-gray-300">Spin speed, bet size increases, chasing losses, deposit patterns</div>
                         </div>
-
-                        <div id="copyNotification" class="mt-3 p-2 bg-green-800 text-green-200 rounded text-sm" style="display: none;">
-                            ✅ <span id="copyMessage">Text copied to clipboard!</span>
+                        <div class="p-3 bg-purple-900 rounded-lg border-l-4 border-purple-500">
+                            <div class="font-semibold text-purple-300">Stream B: Emotional Data</div>
+                            <div class="text-sm text-gray-300">Chat sentiment, support ticket tone, frustration indicators</div>
+                        </div>
+                        <div class="p-3 bg-red-900 rounded-lg border-l-4 border-red-500">
+                            <div class="font-semibold text-red-300">→ Fusion Output: Risk Score</div>
+                            <div class="text-sm text-gray-300">Millisecond correlation triggers Force_Pause events via API</div>
                         </div>
                     </div>
-
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-300 mb-2">Enter text for analysis:</label>
-                        <textarea
-                            id="sentimentInput"
-                            class="w-full h-32 p-3 bg-gray-700 rounded-lg border border-gray-600 text-white resize-none"
-                            placeholder="Paste a menopause example from above or enter your own text for real Claude AI analysis..."
-                        ></textarea>
-                    </div>
-                    <div class="flex gap-4 mb-4">
-                        <label class="flex items-center">
-                            <input type="checkbox" id="healthcareContext" checked class="mr-2">
-                            <span class="text-sm">Healthcare Context</span>
-                        </label>
-                        <label class="flex items-center">
-                            <input type="checkbox" id="relationshipContext" checked class="mr-2">
-                            <span class="text-sm">Relationship Context</span>
-                        </label>
-                        <label class="flex items-center">
-                            <input type="checkbox" id="crisisDetection" checked class="mr-2">
-                            <span class="text-sm">Crisis Detection</span>
-                        </label>
-                    </div>
-                    <button onclick="analyzeSentiment()" class="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-lg font-semibold transition">
-                        <i class="fas fa-brain mr-2"></i>
-                        Analyze with Claude AI
-                    </button>
                 </div>
+                
+                <!-- RG Check Standards Mapping -->
                 <div class="bg-gray-800 rounded-lg p-6">
-                    <h3 class="text-xl font-semibold mb-4">Analysis Results</h3>
-                    <div id="analysisResults" class="space-y-4">
-                        <div class="text-gray-400 text-center py-8">
-                            <i class="fas fa-chart-pie text-4xl mb-4"></i>
-                            <p>Results will appear here after analysis</p>
+                    <h3 class="text-xl font-semibold mb-4 text-green-400">
+                        <i class="fas fa-clipboard-check mr-2"></i>
+                        RG Check Standards Mapping
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="p-3 bg-gray-700 rounded-lg">
+                            <div class="flex justify-between items-center">
+                                <span class="font-semibold">Standard 4: Assisting Players</span>
+                                <span class="text-green-400 text-sm">✓ Auto-Triage</span>
+                            </div>
+                            <div class="text-sm text-gray-400 mt-1">High-distress keywords bypass queue → Specialized RG Agent</div>
+                        </div>
+                        <div class="p-3 bg-gray-700 rounded-lg">
+                            <div class="flex justify-between items-center">
+                                <span class="font-semibold">Standard 5: Informed Decisions</span>
+                                <span class="text-green-400 text-sm">✓ Contextual Nudges</span>
+                            </div>
+                            <div class="text-sm text-gray-400 mt-1">Personalized messages: "Would you like to take a 24-hour break?"</div>
+                        </div>
+                        <div class="p-3 bg-gray-700 rounded-lg">
+                            <div class="flex justify-between items-center">
+                                <span class="font-semibold">Standard 6: Marketing Controls</span>
+                                <span class="text-green-400 text-sm">✓ Suppression List</span>
+                            </div>
+                            <div class="text-sm text-gray-400 mt-1">Distressed players auto-added to Do_Not_Market for 30 days</div>
                         </div>
                     </div>
+                </div>
+            </div>
+            
+            <!-- Feature Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-gradient-to-br from-red-900 to-red-800 rounded-lg p-6 border border-red-700">
+                    <div class="text-3xl mb-3">🚨</div>
+                    <h4 class="text-xl font-bold mb-2">Crisis Latch</h4>
+                    <p class="text-gray-300 text-sm">Instant account freeze on high-confidence self-harm language. Safety > Revenue.</p>
+                </div>
+                <div class="bg-gradient-to-br from-blue-900 to-blue-800 rounded-lg p-6 border border-blue-700">
+                    <div class="text-3xl mb-3">📋</div>
+                    <h4 class="text-xl font-bold mb-2">Audit Vault</h4>
+                    <p class="text-gray-300 text-sm">Immutable compliance log for RG Check auditors. Every flag documented with reasoning.</p>
+                </div>
+                <div class="bg-gradient-to-br from-yellow-900 to-yellow-800 rounded-lg p-6 border border-yellow-700">
+                    <div class="text-3xl mb-3">🛡️</div>
+                    <h4 class="text-xl font-bold mb-2">Marketing Firewall</h4>
+                    <p class="text-gray-300 text-sm">API endpoint that marketing tools must check before sending promos to players.</p>
                 </div>
             </div>
         </section>
@@ -280,62 +275,62 @@
                     <div class="space-y-3">
                         <div class="flex items-center justify-between p-3 bg-red-900 rounded-lg">
                             <div>
-                                <div class="font-medium">High Risk Patient</div>
-                                <div class="text-sm text-gray-300">MenoWellness User</div>
+                                <div class="font-medium">High Risk Detected</div>
+                                <div class="text-sm text-gray-300">API Client: telehealth-app</div>
                             </div>
                             <span class="text-red-400 font-bold">HIGH</span>
                         </div>
                         <div class="flex items-center justify-between p-3 bg-yellow-900 rounded-lg">
                             <div>
-                                <div class="font-medium">Relationship Stress</div>
-                                <div class="text-sm text-gray-300">SupportPartner Couple</div>
+                                <div class="font-medium">Elevated Stress</div>
+                                <div class="text-sm text-gray-300">API Client: wellness-tracker</div>
                             </div>
                             <span class="text-yellow-400 font-bold">MED</span>
                         </div>
                         <div class="flex items-center justify-between p-3 bg-green-900 rounded-lg">
                             <div>
-                                <div class="font-medium">Recovery Progress</div>
-                                <div class="text-sm text-gray-300">Treatment Adherence</div>
+                                <div class="font-medium">Positive Trend</div>
+                                <div class="text-sm text-gray-300">API Client: therapy-notes</div>
                             </div>
                             <span class="text-green-400 font-bold">GOOD</span>
                         </div>
                     </div>
                 </div>
                 <div class="bg-gray-800 rounded-lg p-6">
-                    <h3 class="text-lg font-semibold mb-4">Research Insights</h3>
+                    <h3 class="text-lg font-semibold mb-4">API Capabilities</h3>
                     <div class="space-y-3">
                         <div class="p-3 bg-blue-900 rounded-lg">
-                            <div class="font-medium">Support Quality Impact</div>
-                            <div class="text-sm text-gray-300">75% correlation with treatment success</div>
+                            <div class="font-medium">Sentiment Score</div>
+                            <div class="text-sm text-gray-300">-1.0 to +1.0 with confidence rating</div>
                         </div>
                         <div class="p-3 bg-purple-900 rounded-lg">
-                            <div class="font-medium">Early Warning Patterns</div>
-                            <div class="text-sm text-gray-300">Crisis prediction accuracy: 89%</div>
+                            <div class="font-medium">Emotion Detection</div>
+                            <div class="text-sm text-gray-300">Primary + secondary emotions identified</div>
                         </div>
                         <div class="p-3 bg-indigo-900 rounded-lg">
-                            <div class="font-medium">Population Health</div>
-                            <div class="text-sm text-gray-300">Wellness scores improving 12%</div>
+                            <div class="font-medium">Healthcare Context</div>
+                            <div class="text-sm text-gray-300">Treatment, symptoms, recovery signals</div>
                         </div>
                     </div>
                 </div>
                 <div class="bg-gray-800 rounded-lg p-6">
-                    <h3 class="text-lg font-semibold mb-4">Enterprise Metrics</h3>
+                    <h3 class="text-lg font-semibold mb-4">API Usage (Demo)</h3>
                     <div class="space-y-3">
                         <div class="flex justify-between">
-                            <span class="text-gray-300">API Calls Today</span>
-                            <span class="font-bold">847,392</span>
+                            <span class="text-gray-300">Calls This Session</span>
+                            <span class="font-bold" id="sessionCalls">0</span>
                         </div>
                         <div class="flex justify-between">
-                            <span class="text-gray-300">Revenue (MTD)</span>
-                            <span class="font-bold text-green-400">$247,391</span>
+                            <span class="text-gray-300">Avg Response Time</span>
+                            <span class="font-bold text-green-400">&lt;200ms</span>
                         </div>
                         <div class="flex justify-between">
-                            <span class="text-gray-300">Active Clients</span>
-                            <span class="font-bold">847</span>
+                            <span class="text-gray-300">Free Tier Remaining</span>
+                            <span class="font-bold">100/day</span>
                         </div>
                         <div class="flex justify-between">
-                            <span class="text-gray-300">Data Points</span>
-                            <span class="font-bold">12.4M</span>
+                            <span class="text-gray-300">API Version</span>
+                            <span class="font-bold">v1.0</span>
                         </div>
                     </div>
                 </div>
@@ -431,74 +426,109 @@
             </div>
         </section>
 
-        <!-- Enterprise Features -->
+        <!-- Integration Targets -->
         <section class="mb-12">
-            <h2 class="text-3xl font-bold mb-8 text-center">Enterprise Features</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-gray-800 rounded-lg p-6 text-center">
-                    <div class="claude-badge w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-robot text-2xl text-white"></i>
+            <h2 class="text-3xl font-bold mb-8 text-center">Integration Strategy</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-gray-800 rounded-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-gradient-to-r from-green-500 to-teal-500 w-12 h-12 rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-mobile-alt text-xl text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold">Modern Agile Stack</h3>
+                            <p class="text-sm text-gray-400">Betty, PointsBet, theScore</p>
+                        </div>
                     </div>
-                    <h3 class="text-xl font-semibold mb-3">Claude AI Powered</h3>
-                    <p class="text-gray-300">Exclusive integration with Claude AI for sophisticated healthcare sentiment analysis and clinical insights.</p>
+                    <p class="text-gray-300 mb-4">Deploy as a Kubernetes container. Listen to chat streams via Kafka/PubSub. Push Risk Tags to CRM in real-time.</p>
+                    <div class="text-sm text-green-400">
+                        <i class="fas fa-check mr-2"></i>Supercharge Human Agents
+                    </div>
                 </div>
-                <div class="bg-gray-800 rounded-lg p-6 text-center">
-                    <div class="security-badge w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-shield-alt text-2xl text-white"></i>
+                <div class="bg-gray-800 rounded-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-gradient-to-r from-blue-500 to-purple-600 w-12 h-12 rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-building text-xl text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold">Legacy Enterprise</h3>
+                            <p class="text-sm text-gray-400">OLG, IGT, Scientific Games</p>
+                        </div>
                     </div>
-                    <h3 class="text-xl font-semibold mb-3">Military-Grade Security</h3>
-                    <p class="text-gray-300">Zero-knowledge encryption, HIPAA compliance, and comprehensive audit trails protect all healthcare data.</p>
-                </div>
-                <div class="bg-gray-800 rounded-lg p-6 text-center">
-                    <div class="bg-gradient-to-r from-blue-500 to-purple-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-chart-network text-2xl text-white"></i>
+                    <p class="text-gray-300 mb-4">Strangler Fig Pattern: Sidecar sits as proxy between UI and backend. Passive monitoring, daily Compliance Audit Reports.</p>
+                    <div class="text-sm text-blue-400">
+                        <i class="fas fa-check mr-2"></i>No Code Changes Required
                     </div>
-                    <h3 class="text-xl font-semibold mb-3">Cross-App Correlation</h3>
-                    <p class="text-gray-300">Unique insights from analyzing data across MenoWellness, SupportPartner, and other healthcare apps.</p>
                 </div>
             </div>
         </section>
 
-        <!-- API Pricing -->
+        <!-- Revenue Model -->
         <section class="mb-12">
-            <h2 class="text-3xl font-bold mb-8 text-center">Enterprise Pricing</h2>
+            <h2 class="text-3xl font-bold mb-8 text-center">Revenue Protection Model</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-gray-800 rounded-lg p-6 text-center">
+                    <div class="bg-gradient-to-r from-yellow-500 to-orange-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-user-shield text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Churn Prevention</h3>
+                    <p class="text-gray-300">Detect "Anger" before "Quit". Intervene with cool-down bonuses. Saving one whale from self-exclusion pays for the software annually.</p>
+                </div>
+                <div class="bg-gray-800 rounded-lg p-6 text-center">
+                    <div class="bg-gradient-to-r from-red-500 to-pink-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-gavel text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Penalty Avoidance</h3>
+                    <p class="text-gray-300">AGCO fines operators for failing to intervene. We provide the Audit Trail proving every emotional cry for help was scanned and logged.</p>
+                </div>
+                <div class="bg-gray-800 rounded-lg p-6 text-center">
+                    <div class="bg-gradient-to-r from-green-500 to-teal-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-file-contract text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">License Protection</h3>
+                    <p class="text-gray-300">RG Check accreditation is mandatory for iGO operators. We become essential infrastructure—they can't turn us off without risking their license.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold mb-8 text-center">Pricing</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
-                    <h3 class="text-xl font-semibold mb-3">Professional</h3>
-                    <div class="text-3xl font-bold mb-4">$2,990<span class="text-lg text-gray-400">/month</span></div>
+                    <h3 class="text-xl font-semibold mb-3">Pilot</h3>
+                    <div class="text-3xl font-bold mb-4">$2,500<span class="text-lg text-gray-400">/month</span></div>
                     <ul class="space-y-2 mb-6">
-                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> 50,000 API calls</li>
-                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Advanced sentiment analysis</li>
-                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Healthcare + relationship context</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Up to 10,000 players</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Chat sentiment analysis</li>
                         <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Crisis detection</li>
-                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Priority support</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Weekly audit reports</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Slack support</li>
                     </ul>
-                    <button class="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded-lg transition">Get Started</button>
+                    <button class="w-full bg-green-600 hover:bg-green-700 py-2 rounded-lg transition">Start Pilot</button>
                 </div>
-                <div class="bg-gray-800 rounded-lg p-6 border-2 border-purple-500 relative">
-                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-purple-500 text-white px-4 py-1 rounded-full text-sm">Most Popular</div>
-                    <h3 class="text-xl font-semibold mb-3">Enterprise</h3>
-                    <div class="text-3xl font-bold mb-4">$8,990<span class="text-lg text-gray-400">/month</span></div>
+                <div class="bg-gray-800 rounded-lg p-6 border-2 border-green-500 relative">
+                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-1 rounded-full text-sm">RG Check Ready</div>
+                    <h3 class="text-xl font-semibold mb-3">Operator</h3>
+                    <div class="text-3xl font-bold mb-4">$0.10<span class="text-lg text-gray-400">/player/mo</span></div>
                     <ul class="space-y-2 mb-6">
-                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> 500,000 API calls</li>
-                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Clinical insights generation</li>
-                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Cross-app correlation analytics</li>
-                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Population health insights</li>
-                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Research data access</li>
-                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Dedicated success manager</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Unlimited players</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Full Risk Fusion engine</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Marketing Firewall API</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Daily compliance reports</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Audit Vault access</li>
                     </ul>
-                    <button class="w-full bg-purple-600 hover:bg-purple-700 py-2 rounded-lg transition">Get Started</button>
+                    <button class="w-full bg-green-600 hover:bg-green-700 py-2 rounded-lg transition">Contact Sales</button>
                 </div>
                 <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
-                    <h3 class="text-xl font-semibold mb-3">Research Partner</h3>
-                    <div class="text-3xl font-bold mb-4">$24,990<span class="text-lg text-gray-400">/month</span></div>
+                    <h3 class="text-xl font-semibold mb-3">Enterprise</h3>
+                    <div class="text-3xl font-bold mb-4">Custom<span class="text-lg text-gray-400"></span></div>
                     <ul class="space-y-2 mb-6">
-                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Unlimited API calls</li>
-                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Full platform access</li>
-                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Pharmaceutical data licensing</li>
-                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Custom ML model training</li>
-                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> White-label deployment</li>
-                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> 24/7 enterprise support</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> On-premise deployment</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Multi-brand support</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Custom integrations</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> SLA guarantee</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Dedicated CSM</li>
                     </ul>
                     <button class="w-full bg-gray-600 hover:bg-gray-700 py-2 rounded-lg transition">Contact Sales</button>
                 </div>
@@ -512,39 +542,39 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
                     <h3 class="text-lg font-semibold mb-4">SentimentAsAService</h3>
-                    <p class="text-gray-400">Military-grade healthcare intelligence platform powered by Claude AI.</p>
+                    <p class="text-gray-400">Healthcare sentiment analysis API powered by Claude AI. Add emotional intelligence to your application.</p>
                 </div>
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">Products</h3>
+                    <h3 class="text-lg font-semibold mb-4">API</h3>
                     <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-white">Sentiment Analysis API</a></li>
-                        <li><a href="#" class="hover:text-white">Clinical Insights</a></li>
-                        <li><a href="#" class="hover:text-white">Research Platform</a></li>
-                        <li><a href="#" class="hover:text-white">Enterprise Dashboard</a></li>
+                        <li><a href="/api-explorer.html" class="hover:text-white">API Explorer</a></li>
+                        <li><a href="#" class="hover:text-white">Documentation</a></li>
+                        <li><a href="#" class="hover:text-white">SDKs & Libraries</a></li>
+                        <li><a href="#" class="hover:text-white">Changelog</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">Security</h3>
+                    <h3 class="text-lg font-semibold mb-4">For Operators</h3>
                     <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-white">HIPAA Compliance</a></li>
-                        <li><a href="#" class="hover:text-white">Zero-Knowledge Encryption</a></li>
-                        <li><a href="#" class="hover:text-white">Audit Trails</a></li>
-                        <li><a href="#" class="hover:text-white">Security Documentation</a></li>
+                        <li><a href="#" class="hover:text-white">Ontario iGaming</a></li>
+                        <li><a href="#" class="hover:text-white">Sports Betting</a></li>
+                        <li><a href="#" class="hover:text-white">Online Casino</a></li>
+                        <li><a href="#" class="hover:text-white">Lottery & Scratch</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">Support</h3>
+                    <h3 class="text-lg font-semibold mb-4">Company</h3>
                     <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-white">API Documentation</a></li>
-                        <li><a href="#" class="hover:text-white">Enterprise Support</a></li>
-                        <li><a href="#" class="hover:text-white">Healthcare Compliance</a></li>
-                        <li><a href="#" class="hover:text-white">Contact Sales</a></li>
+                        <li><a href="#" class="hover:text-white">About</a></li>
+                        <li><a href="#" class="hover:text-white">Security & Compliance</a></li>
+                        <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-white">Contact</a></li>
                     </ul>
                 </div>
             </div>
             <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 2024 SentimentAsAService. Healthcare Intelligence Platform. Powered exclusively by Claude AI.</p>
-                <p class="mt-2 text-sm">HIPAA Compliant • Military-Grade Security • Zero-Knowledge Architecture</p>
+                <p>&copy; 2025 SentimentAsAService. RG Check Compliance Engine.</p>
+                <p class="mt-2 text-sm">Powered by Rust • AGCO Compliant • Ontario iGaming Ready</p>
             </div>
         </div>
     </footer>
